@@ -49,8 +49,8 @@ export const ui: Dict = {
   'faq.title': { es: 'Preguntas frecuentes', en: 'FAQ' },
   'cta.title': { es: 'Cuéntanos tu negocio', en: 'Tell us about your business' },
   'cta.sub': {
-    es: 'Respondemos en un plazo razonable. TODO(edu): plazo exacto.',
-    en: 'We reply within a reasonable time. TODO(edu): exact SLA.',
+    es: 'Cuéntanos el negocio y te respondemos por email o WhatsApp.',
+    en: 'Tell us about the business and we reply by email or WhatsApp.',
   },
 
   'compare.before': { es: 'Antes', en: 'Before' },
@@ -101,8 +101,8 @@ export const ui: Dict = {
 
   'gracias.title': { es: 'Mensaje recibido', en: 'Message received' },
   'gracias.body': {
-    es: 'Te responderemos pronto. Mientras tanto, puedes ver nuestros casos.',
-    en: 'We will get back to you soon. Meanwhile, take a look at our work.',
+    es: 'Te responderemos por email o WhatsApp. Mientras tanto, puedes ver nuestros casos.',
+    en: 'We will reply by email or WhatsApp. Meanwhile, take a look at our work.',
   },
 
   '404.title': { es: 'Página no encontrada', en: 'Page not found' },
@@ -159,10 +159,6 @@ export const ui: Dict = {
   'estado.pausado': { es: 'Pausado', en: 'Paused' },
   'estado.archivado': { es: 'Archivado', en: 'Archived' },
 
-  'legal.placeholder': {
-    es: 'Datos legales pendientes. TODO(edu): titular, NIF, domicilio.',
-    en: 'Legal details pending. TODO(edu): legal entity, tax ID, address.',
-  },
   'kit.title': { es: 'Kit de componentes', en: 'Component kit' },
   'kit.lead': {
     es: 'Solo en desarrollo. No se publica.',

@@ -2,26 +2,79 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import type { Lang, RouteKey } from '../i18n/routes';
-import { uiT } from '../i18n/ui';
+import { legalDocument } from '../data/legal';
+import { site } from '../data/site';
 
 interface Props {
   lang: Lang;
-  routeKey: RouteKey;
+  routeKey: Extract<RouteKey, 'avisoLegal' | 'privacidad' | 'cookies'>;
   title: string;
 }
 
 const { lang, routeKey, title } = Astro.props;
+const page = legalDocument(routeKey, lang);
+
+const marks = [
+  { token: site.email, href: `mailto:${site.email}` },
+  { token: site.phoneDisplay, href: `tel:${site.phoneTel}` },
+  { token: 'aepd.es', href: 'https://www.aepd.es/' },
+];
+
+function chunks(paragraph: string): { text: string; href?: string }[] {
+  let rest = paragraph;
+  const out: { text: string; href?: string }[] = [];
+  while (rest.length) {
+    let nextAt = -1;
+    let next = marks[0];
+    let found = false;
+    for (const mark of marks) {
+      const at = rest.indexOf(mark.token);
+      if (at !== -1 && (!found || at < nextAt)) {
+        nextAt = at;
+        next = mark;
+        found = true;
+      }
+    }
+    if (!found) {
+      out.push({ text: rest });
+      break;
+    }
+    if (nextAt > 0) out.push({ text: rest.slice(0, nextAt) });
+    out.push({ text: next.token, href: next.href });
+    rest = rest.slice(nextAt + next.token.length);
+  }
+  return out;
+}
 ---
 
-<BaseLayout lang={lang} title={title} description={uiT('legal.placeholder', lang)} routeKey={routeKey}>
+<BaseLayout lang={lang} title={title} description={page.description} routeKey={routeKey}>
   <Section>
     <h1 class="font-display text-4xl font-bold">{title}</h1>
-    <div class="mt-8 max-w-prose space-y-4 text-sm text-tinta/90">
-      <p>{uiT('legal.placeholder', lang)}</p>
-      <p>
-        {'{{TITULAR}}'} · {'{{NIF}}'} · {'{{DOMICILIO}}'} · {'{{EMAIL}}'}
-      </p>
-      <p class="text-gris">TODO(edu): redactar textos legales reales cuando exista titular.</p>
+    <div class="mt-8 max-w-prose space-y-8 text-sm leading-relaxed text-tinta/90">
+      {
+        page.blocks.map((block) => (
+          <section>
+            <h2 class="font-display text-xl font-bold">{block.heading}</h2>
+            {block.body.map((paragraph) => (
+              <p class="mt-3">
+                {chunks(paragraph).map((part) =>
+                  part.href ? (
+                    <a
+                      class="underline underline-offset-2"
+                      href={part.href}
+                      rel={part.href.startsWith('http') ? 'noopener' : undefined}
+                    >
+                      {part.text}
+                    </a>
+                  ) : (
+                    part.text
+                  ),
+                )}
+              </p>
+            ))}
+          </section>
+        ))
+      }
     </div>
   </Section>
 </BaseLayout>

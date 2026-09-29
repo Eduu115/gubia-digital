@@ -14,8 +14,10 @@ const { lang } = Astro.props;
   <Section>
     <h1 class="font-display text-4xl font-bold">{uiT('cta.title', lang)}</h1>
     <p class="mt-3 max-w-prose text-gris">{uiT('cta.sub', lang)}</p>
-    <p class="mt-4 text-sm">
+    <p class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm">
       <a class="font-semibold text-verde underline" href={`mailto:${site.email}`}>{site.email}</a>
+      <a class="font-semibold text-verde underline" href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>
+      <a class="font-semibold text-verde underline" href={site.whatsapp} rel="noopener">WhatsApp</a>
     </p>
     <div class="mt-10">
       <ContactForm lang={lang} />

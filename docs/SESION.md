@@ -59,7 +59,10 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - Stack de la web nueva: no consta en el informe. No se afirma.
 - La portada del caso muestra la comparativa `home`. Catálogo, arreglos, nosotros y contacto van en la narrativa.
 - `_demo` no entra en índices ni en la home. Sigue en `/_kit` y, en dev, en `/casos/_demo/`.
-- Formulario: en dev, Vite hace proxy de `/api` a `contact-api` en `:8787`. Sin JS la API responde 303 a `/gracias/`. Si la API no responde, el formulario enseña el email placeholder.
+- Formulario: en dev, Vite hace proxy de `/api` a `contact-api` en `:8787`. Sin JS la API responde 303 a `/gracias/`. Si la API no responde, el formulario enseña `hola@gubiadigital.com`.
+- Bio pública: desarrollo para negocios, sin empleador ni cargo. La de LinkedIn se usó solo como materia prima.
+- serdrive.com hoy no sirve la landing (el HTTPS no resuelve y el HTTP enseña el proxy por defecto). No se enlaza hasta que la sirva.
+- Fechas de proyecto: mes de creación del repo público, no un lanzamiento comercial.
 - Informe PDF de Ana Mari: **no publicar** de momento. Original en `kits/gubia-digital-kit/proyectos/confecciones-ana-mari/Informe-Rediseno-Confecciones-Ana-Mari.pdf`. Comentario en `caso.yaml`. Retomar más adelante (qué se enseña y a quién).
 - Lighthouse CI queda fuera hasta medir la web. No se fija un presupuesto que aún no hemos comprobado.
 - Imagen OG: se genera en `prebuild` con sharp (portada + barra tinta/naranja). Tipografía del rótulo: Helvetica, porque el SVG no embebe Space Grotesk. Salida en `web/public/og/` (gitignored).

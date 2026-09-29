@@ -1,0 +1,24 @@
+nombre: "API Arena"
+publicar: true
+destacado: true
+orden: 1
+estado: produccion
+tipo: producto
+tagline:
+  es: "Aprende a diseñar APIs REST compitiendo en retos"
+  en: "Learn REST API design by competing in challenges"
+rol:
+  es: "Diseño, desarrollo y operación"
+  en: "Design, development and operations"
+# Mes en que se creó el repo público, no una fecha de lanzamiento comercial.
+fechaInicio: "2026-01"
+stack: [Java 21, Spring Boot, Kafka, PostgreSQL, Redis, React, Docker]
+enlaces:
+  web: "https://apiarena.net"
+  repo: "https://github.com/Eduu115/API-ARENA"
+portada: ./img/portada.webp
+cifras:
+  - valor: "9"
+    etiqueta:
+      es: "servicios activos"
+      en: "active services"

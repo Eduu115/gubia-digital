@@ -89,12 +89,23 @@ const ogPath = slug.startsWith('_') ? '/og-default.webp' : `/og/proyectos/${slug
     </div>
 
     {
-      entry.data.enlaces?.web && (
-        <p class="mt-10">
-          <a class="font-semibold text-verde underline" href={entry.data.enlaces.web} rel="noopener">
-            {entry.data.enlaces.web}
-          </a>
-        </p>
+      (entry.data.enlaces?.web || entry.data.enlaces?.repo) && (
+        <ul class="mt-10 space-y-2">
+          {entry.data.enlaces?.web && (
+            <li>
+              <a class="font-semibold text-verde underline" href={entry.data.enlaces.web} rel="noopener">
+                {entry.data.enlaces.web}
+              </a>
+            </li>
+          )}
+          {entry.data.enlaces?.repo && (
+            <li>
+              <a class="font-semibold text-verde underline" href={entry.data.enlaces.repo} rel="noopener">
+                {lang === 'es' ? 'Código' : 'Code'}
+              </a>
+            </li>
+          )}
+        </ul>
       )
     }
   </Section>
