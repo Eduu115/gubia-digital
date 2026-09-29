@@ -3,7 +3,7 @@
 | Campo | Valor |
 |-------|-------|
 | Fecha | 2026-09-29 |
-| Fase actual | **Fase 4 en curso:** SEO (JSON-LD, robots, OG por caso). Lighthouse CI aún no. |
+| Fase actual | **Fase 4:** accesibilidad 100 en home, caso y contacto. Rendimiento de la home medido en la otra PR. |
 | Estado | **listo para retomar** |
 | Marca | **kit gana al §9.2 del plan** (verde #1B4D3E, naranja #FF6A13, tinta #1C2B4A, crema #F6F1E7; Space Grotesk + Inter) |
 | Design read | Landing B2B local pymes: tallado, contraste fuerte; tokens kit. Dials: VARIANCE 6 / MOTION 3 / DENSITY 4 |
@@ -41,6 +41,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - ~14:10 — Informe PDF de Ana Mari **fuera de la web**. Sigue en el kit. La ficha ya no lo enlaza.
 - ~14:13 — `contact-api` (Hono + SQLite): validación, honeypot, timing, Turnstile si hay secreto, rate limit, aviso ntfy/SMTP si hay config, reintento y purga. 9 tests. El formulario de `/contacto/` llega a `/gracias/` con la API en `:8787`.
 - ~15:00 — SEO: `robots.txt`, JSON-LD (servicio, FAQ, migas, CreativeWork), OG 1200×630 del caso Ana Mari, `noindex` en gracias y 404. `width`/`height` en las tarjetas.
+- ~15:41 — Contraste AA: gris `#646b78` (antes `#6b7280`, 4,29:1 sobre crema) y los números del proceso en naranja oscuro. Accesibilidad 100 en home, caso y contacto.
 
 ## Decisiones
 
@@ -68,7 +69,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 
 1. **No rehacer** el caso Ana Mari, el PDF ni el SEO básico.
 2. Cuando haya secretos: `TURNSTILE_SECRET`, ntfy y SMTP. Falta el widget de Turnstile (site key).
-3. Fase 4 restante: Lighthouse CI, e2e y enlaces. Presupuestos cuando el CI exista.
+3. El presupuesto automático de Lighthouse sigue apagado. La home, el caso y el contacto ya dan 100 de accesibilidad.
 4. Falta confirmar con Edu: fecha exacta de entrega, logo, testimonio, dominio canónico `confeccionesanamari.es`, y más adelante qué hacer con el PDF.
 
 ## Cómo verificar
