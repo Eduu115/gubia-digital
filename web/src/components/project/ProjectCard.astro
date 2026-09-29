@@ -10,9 +10,11 @@ interface Props {
   tagline: string;
   estado: string;
   portadaSrc: string;
+  portadaWidth?: number;
+  portadaHeight?: number;
 }
 
-const { lang, slug, nombre, tagline, estado, portadaSrc } = Astro.props;
+const { lang, slug, nombre, tagline, estado, portadaSrc, portadaWidth, portadaHeight } = Astro.props;
 ---
 
 <a
@@ -23,6 +25,8 @@ const { lang, slug, nombre, tagline, estado, portadaSrc } = Astro.props;
     <img
       src={portadaSrc}
       alt={nombre}
+      width={portadaWidth}
+      height={portadaHeight}
       class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
       loading="lazy"
     />

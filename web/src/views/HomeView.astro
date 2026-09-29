@@ -21,12 +21,16 @@ import {
   resolveMetric,
 } from '../lib/content';
 import { resolveContentImage } from '../lib/images';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { faqPage, professionalService } from '../lib/schema';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const origin = Astro.site ?? new URL('https://gubiadigital.example');
+const homeUrl = new URL(localizedPath('home', lang), origin).href;
 
 const featured = await getFeaturedCasos();
 const allCasos = await getPublishedCasos();
@@ -81,12 +85,19 @@ for (const c of allCasos.slice(0, 3)) {
     resumen: texto?.data.resumen ?? '',
     portadaSrc: portada?.src ?? '',
     portadaAlt: texto?.data.titulo ?? c.data.cliente,
+    portadaWidth: portada?.width,
+    portadaHeight: portada?.height,
     metricBefore,
     metricAfter,
     metricLabel,
   });
 }
 ---
+
+<JsonLd data={professionalService(homeUrl)} />
+<JsonLd
+  data={faqPage(faq.map((item) => ({ question: item.q[lang], answer: item.a[lang] })))}
+/>
 
 {/* Hero */}
 <section class="border-b border-linea bg-crema">
@@ -223,6 +234,8 @@ for (const c of allCasos.slice(0, 3)) {
               tagline={p.data.tagline[lang]}
               estado={p.data.estado}
               portadaSrc={portada?.src ?? ''}
+              portadaWidth={portada?.width}
+              portadaHeight={portada?.height}
             />
           );
         })}

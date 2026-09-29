@@ -33,6 +33,8 @@ for (const c of casos) {
     resumen: texto?.data.resumen ?? '',
     portadaSrc: portada?.src ?? '',
     portadaAlt: texto?.data.titulo ?? c.data.cliente,
+    portadaWidth: portada?.width,
+    portadaHeight: portada?.height,
     metricBefore: m && meta ? `${formatNumber(m.antes, lang)}${meta.unidad}` : undefined,
     metricAfter: m && meta ? `${formatNumber(m.despues, lang)}${meta.unidad}` : undefined,
     metricLabel: meta?.label,

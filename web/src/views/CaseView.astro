@@ -21,6 +21,8 @@ import {
 } from '../lib/content';
 import { resolveContentImage, resolveContentPdf } from '../lib/images';
 import { render } from 'astro:content';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { breadcrumbList, creativeWork } from '../lib/schema';
 
 interface Props {
   lang: Lang;
@@ -64,6 +66,11 @@ const leadPairs = leadId ? pairs.filter((pair) => pair.id === leadId) : [];
 const partida = entry.data.puntoDePartida;
 const informe = entry.data.informes?.[lang] ?? entry.data.informes?.es;
 const informeUrl = informe ? resolveContentPdf('casos', slug, informe) : undefined;
+const origin = Astro.site ?? new URL('https://gubiadigital.example');
+const pageUrl = new URL(localizedPath('caso', lang, { slug }), origin).href;
+const casosUrl = new URL(localizedPath('casos', lang), origin).href;
+const ogPath = slug.startsWith('_') ? '/og-default.webp' : `/og/casos/${slug}.webp`;
+const ogImage = new URL(ogPath, origin).href;
 const partidaImg = partida.imagen ? resolveContentImage('casos', slug, partida.imagen) : undefined;
 const mdxComponents = { Comparativa, Captura, Metrica, Nota };
 ---
@@ -74,7 +81,24 @@ const mdxComponents = { Comparativa, Captura, Metrica, Nota };
   description={texto.data.descripcionSeo}
   routeKey="caso"
   slug={slug}
+  ogImage={ogPath}
+  ogWidth={slug.startsWith('_') ? undefined : 1200}
+  ogHeight={slug.startsWith('_') ? undefined : 630}
 >
+  <JsonLd
+    data={breadcrumbList([
+      { name: uiT('nav.casos', lang), url: casosUrl },
+      { name: cliente, url: pageUrl },
+    ])}
+  />
+  <JsonLd
+    data={creativeWork({
+      name: texto.data.titulo,
+      url: pageUrl,
+      description: texto.data.descripcionSeo,
+      image: ogImage,
+    })}
+  />
   <Section>
     <nav class="text-sm text-gris" aria-label="breadcrumb">
       <a href={localizedPath('casos', lang)} class="hover:text-tinta">{uiT('nav.casos', lang)}</a>

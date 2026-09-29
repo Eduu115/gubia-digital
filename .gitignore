@@ -13,3 +13,4 @@ test-results
 .playwright-cli
 web/.playwright-cli
 .pnpm-store
+web/public/og
