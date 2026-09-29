@@ -4,10 +4,16 @@ resumen: "You log transactions, see spending and savings, and import a bank CSV.
 descripcionSeo: "saveToWin: spending and savings on your server, with PostgreSQL and money stored in cents."
 ---
 
-## What it does
+# Nothing leaves this machine
 
-saveToWin is for logging expenses and income, sorting them, and seeing a dashboard: spending by category, savings rate, and budget against what actually happened. A bank CSV can be imported. Each account only sees its own data.
+saveToWin logs expenses and income on a server you own. Each account sees only its own data. The dashboard shows spending by category, the savings rate, and the budget against what actually happened. A transaction goes in by hand or from a bank CSV.
 
-## How it is built
+<Figura src="./img/portada.webp" alt="saveToWin sign-in screen, with the line that the account and the data stay on your server" />
 
-It runs on your own server with Docker: a Node app (Hono and React) and PostgreSQL. Money is stored in cents, not decimals, so the figures do not drift. Sign-in uses a hashed password and an httpOnly cookie.
+<Nota>
+Money is stored as whole cents. 1234 is €12.34. No floating decimals: the euro you see is only formatting.
+</Nota>
+
+It runs on Docker: a Node app (Hono and React) and PostgreSQL. The session lives in an httpOnly cookie, not in a loose token in the browser.
+
+[savetowin.app](https://savetowin.app) · [Code](https://github.com/Eduu115/saveToWin)

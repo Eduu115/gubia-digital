@@ -1,0 +1,29 @@
+---
+import { resolveContentImage } from '../../lib/images';
+
+interface Props {
+  proyecto: string;
+  src: string;
+  alt: string;
+  pie?: string;
+  ancho?: 'ancho' | 'texto';
+}
+
+const { proyecto, src, alt, pie, ancho = 'ancho' } = Astro.props;
+const img = resolveContentImage('proyectos', proyecto, src);
+---
+
+{
+  img && (
+    <figure class:list={['my-8', ancho === 'texto' ? 'max-w-prose' : '']}>
+      <img
+        src={img.src}
+        alt={alt}
+        width={img.width}
+        height={img.height}
+        class="w-full rounded-[var(--radius-md)] border border-linea"
+      />
+      {pie && <figcaption class="mt-2 max-w-prose text-sm text-gris">{pie}</figcaption>}
+    </figure>
+  )
+}

@@ -1,17 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
+import Figura from '../components/mdx/Figura.astro';
+import Nota from '../components/mdx/Nota.astro';
 import type { Lang } from '../i18n/routes';
 import { uiT } from '../i18n/ui';
-import {
-  getPublishedProyectos,
-  proyectoSlug,
-  getProyectoTexto,
-} from '../lib/content';
-import { resolveContentImage } from '../lib/images';
+import { getPublishedProyectos, proyectoSlug, getProyectoTexto } from '../lib/content';
 import { render } from 'astro:content';
 import { localizedPath } from '../i18n/utils';
-import FigureStat from '../components/ui/FigureStat.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import { breadcrumbList, creativeWork } from '../lib/schema';
 
@@ -23,11 +19,10 @@ if (!entry) return Astro.redirect(localizedPath('proyectos', lang));
 const texto = await getProyectoTexto(slug, lang);
 if (!texto) return Astro.redirect(localizedPath('proyectos', lang));
 const { Content } = await render(texto);
-const portada = resolveContentImage('proyectos', slug, entry.data.portada);
 const origin = Astro.site ?? new URL('https://gubiadigital.example');
 const pageUrl = new URL(localizedPath('proyecto', lang, { slug }), origin).href;
 const indexUrl = new URL(localizedPath('proyectos', lang), origin).href;
-const ogPath = slug.startsWith('_') ? '/og-default.webp' : `/og/proyectos/${slug}.webp`;
+const ogPath = `/og/proyectos/${slug}.webp`;
 ---
 
 <BaseLayout
@@ -37,8 +32,8 @@ const ogPath = slug.startsWith('_') ? '/og-default.webp' : `/og/proyectos/${slug
   routeKey="proyecto"
   slug={slug}
   ogImage={ogPath}
-  ogWidth={slug.startsWith('_') ? undefined : 1200}
-  ogHeight={slug.startsWith('_') ? undefined : 630}
+  ogWidth={1200}
+  ogHeight={630}
 >
   <JsonLd
     data={breadcrumbList([
@@ -55,58 +50,13 @@ const ogPath = slug.startsWith('_') ? '/og-default.webp' : `/og/proyectos/${slug
     })}
   />
   <Section>
-    <p class="text-sm font-semibold text-verde">{uiT(`estado.${entry.data.estado}`, lang)}</p>
-    <h1 class="mt-2 font-display text-4xl font-bold md:text-5xl">{entry.data.nombre}</h1>
-    <p class="mt-3 text-lg text-gris">{entry.data.tagline[lang]}</p>
-    <p class="mt-2 text-sm text-tinta/80">{entry.data.rol[lang]}</p>
-
-    {
-      portada && (
-        <img
-          src={portada.src}
-          alt={entry.data.nombre}
-          width={portada.width}
-          height={portada.height}
-          class="mt-10 w-full rounded-[var(--radius-md)] border border-linea"
-        />
-      )
-    }
-
-    {
-      entry.data.cifras && (
-        <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {entry.data.cifras.map((c) => (
-            <li>
-              <FigureStat valor={c.valor} etiqueta={c.etiqueta[lang]} />
-            </li>
-          ))}
-        </ul>
-      )
-    }
-
-    <div class="mt-12 max-w-prose space-y-4 [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold">
-      <Content />
+    <p>
+      <a class="text-sm font-semibold text-verde underline underline-offset-4" href={indexUrl}>
+        {uiT('nav.proyectos', lang)}
+      </a>
+    </p>
+    <div class="proyecto-cuerpo mt-8 space-y-4 [&_a]:font-semibold [&_a]:text-verde [&_a]:underline [&_h1]:max-w-[22ch] [&_h1]:font-display [&_h1]:text-4xl [&_h1]:font-bold [&_h1]:leading-[1.05] md:[&_h1]:text-6xl [&_h2]:mt-12 [&_h2]:max-w-prose [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_p]:max-w-prose [&_p]:text-tinta/90">
+      <Content components={{ Figura, Nota }} />
     </div>
-
-    {
-      (entry.data.enlaces?.web || entry.data.enlaces?.repo) && (
-        <ul class="mt-10 space-y-2">
-          {entry.data.enlaces?.web && (
-            <li>
-              <a class="font-semibold text-verde underline" href={entry.data.enlaces.web} rel="noopener">
-                {entry.data.enlaces.web}
-              </a>
-            </li>
-          )}
-          {entry.data.enlaces?.repo && (
-            <li>
-              <a class="font-semibold text-verde underline" href={entry.data.enlaces.repo} rel="noopener">
-                {lang === 'es' ? 'Código' : 'Code'}
-              </a>
-            </li>
-          )}
-        </ul>
-      )
-    }
   </Section>
 </BaseLayout>

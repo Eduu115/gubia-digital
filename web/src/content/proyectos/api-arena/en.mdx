@@ -4,14 +4,18 @@ resumen: "You submit an API, a sandbox tests it over HTTP, and the result lands 
 descripcionSeo: "API Arena: REST API challenges with real HTTP tests, ranking and replay. A project by Eduardo Serrano."
 ---
 
-## What it is
+API Arena is in production. The public site marks it as early access.
 
-API Arena is for practising REST API design. You pick a challenge, build the API, send it as a ZIP, and a sandbox builds it and tests it with real HTTP requests. The public site is in early access.
+# A real API, tested over HTTP
 
-## How it is built
+You pick a challenge, build it, and send a ZIP. A sandbox builds it and hits it with real requests. It is not a paper exam.
 
-The core runs end to end in Docker. Nine services are active: accounts, challenges, submissions, sandbox, tests, ranking, review, metrics and notifications. Data lives in PostgreSQL and Redis. Kafka moves the pipeline. The front end is React.
+<Figura src="./img/portada.webp" alt="API Arena homepage showing an API submission and the HTTP test results" pie="The public homepage, with the sandbox running." />
 
-## What each submission leaves
+## Nine services, one pipeline
 
-It is not a list of exercises. Each submission leaves a replay: what was built, what failed, and where it sits on the board.
+Accounts, challenges, submissions, sandbox, tests, ranking, review, metrics and notifications. PostgreSQL and Redis hold the state. Kafka moves the pipeline. The front end is React. It all closes in Docker.
+
+Each submission leaves a replay: what was built, what failed, and where it sits on the board.
+
+[apiarena.net](https://apiarena.net) · [Code](https://github.com/Eduu115/API-ARENA)

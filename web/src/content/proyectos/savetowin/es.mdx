@@ -4,10 +4,16 @@ resumen: "Anotas movimientos, ves el gasto y el ahorro, e importas el CSV del ba
 descripcionSeo: "saveToWin: gastos y ahorros en tu servidor, con PostgreSQL y el dinero guardado en céntimos."
 ---
 
-## Qué hace
+# Nada sale de esta máquina
 
-saveToWin sirve para anotar gastos e ingresos, clasificarlos y ver un panel: gasto por categoría, tasa de ahorro y presupuesto frente a lo real. Se puede importar un CSV del banco. Cada cuenta solo ve sus datos.
+saveToWin anota gastos e ingresos en un servidor que es tuyo. Cada cuenta ve solo lo suyo. El panel enseña el gasto por categoría, la tasa de ahorro y el presupuesto frente a lo que pasó de verdad. Un movimiento se mete a mano o con el CSV del banco.
 
-## Cómo está hecha
+<Figura src="./img/portada.webp" alt="Entrada de saveToWin: el lema dice que la cuenta y los datos se quedan en tu servidor" />
 
-Corre en un servidor propio con Docker: una aplicación Node (Hono y React) y PostgreSQL. El dinero se guarda en céntimos, no en decimales, para no perder precisión. El acceso va con registro, contraseña hasheada y una cookie httpOnly.
+<Nota>
+El dinero se guarda en céntimos enteros. 1234 es 12,34 €. Nada de decimales flotantes: el euro que se ve es solo formato.
+</Nota>
+
+Corre con Docker: una aplicación Node (Hono y React) y PostgreSQL. La sesión va en una cookie httpOnly, no en un token suelto en el navegador.
+
+[savetowin.app](https://savetowin.app) · [Código](https://github.com/Eduu115/saveToWin)

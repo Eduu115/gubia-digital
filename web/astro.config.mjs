@@ -4,7 +4,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-/** Añade caso y lang a Comparativa/Captura/Metrica según la ruta del MDX. */
+/** Añade caso/proyecto y lang a los componentes MDX según la ruta del archivo. */
 function injectContentRefs() {
   return {
     name: 'gubia-content-refs',
@@ -15,15 +15,25 @@ function injectContentRefs() {
      */
     transform(code, id) {
       const clean = id.split('?')[0] ?? id;
-      const match = clean.match(/\/casos\/([^/]+)\/(es|en)\.mdx$/);
-      if (!match) return;
-      const slug = match[1];
-      const lang = match[2];
-      const next = code.replace(/<(Comparativa|Captura|Metrica)\b([^>]*?)(\/?>)/g, (full, tag, attrs, end) => {
-        let extra = attrs;
-        if (!/\bcaso\s*=/.test(attrs)) extra += ` caso="${slug}"`;
-        if (!/\blang\s*=/.test(attrs)) extra += ` lang="${lang}"`;
-        return `<${tag}${extra}${end}`;
+      const caso = clean.match(/\/casos\/([^/]+)\/(es|en)\.mdx$/);
+      if (caso) {
+        const slug = caso[1];
+        const lang = caso[2];
+        const next = code.replace(/<(Comparativa|Captura|Metrica)\b([^>]*?)(\/?>)/g, (full, tag, attrs, end) => {
+          let extra = attrs;
+          if (!/\bcaso\s*=/.test(attrs)) extra += ` caso="${slug}"`;
+          if (!/\blang\s*=/.test(attrs)) extra += ` lang="${lang}"`;
+          return `<${tag}${extra}${end}`;
+        });
+        if (next === code) return;
+        return next;
+      }
+      const proyecto = clean.match(/\/proyectos\/([^/]+)\/(es|en)\.mdx$/);
+      if (!proyecto) return;
+      const slug = proyecto[1];
+      const next = code.replace(/<Figura\b([^>]*?)(\/?>)/g, (full, attrs, end) => {
+        if (/\bproyecto\s*=/.test(attrs)) return full;
+        return `<Figura${attrs} proyecto="${slug}"${end}`;
       });
       if (next === code) return;
       return next;

@@ -44,6 +44,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - ~15:00 — SEO: `robots.txt`, JSON-LD (servicio, FAQ, migas, CreativeWork), OG 1200×630 del caso Ana Mari, `noindex` en gracias y 404. `width`/`height` en las tarjetas.
 - ~15:13 — CI: `.github/workflows/ci.yml` corre content:check, vitest, build, enlaces internos y 4 e2e (idioma, teclado del comparador, `?ref=footer`, formulario sin JS). Lighthouse no entra todavía.
 - ~18:05 — Identidad: Eduardo Serrano, `hola@gubiadigital.com`, teléfono y WhatsApp `+34 711 510 387`, LinkedIn y GitHub. Aviso legal, privacidad y cookies escritos sin NIF ni domicilio. Proyectos: API Arena, saveToWin y serdrive (en desarrollo, sin enlace al dominio). Foto y logo de Ana Mari, pendientes.
+- ~18:45 — El dev de `:4321` seguía con el fixture `_demo` (API Arena con el logo). El índice ya no lo enseña. Cada proyecto tiene su propio artículo, no la ficha compartida.
 
 ## Decisiones
 
