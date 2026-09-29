@@ -3,7 +3,7 @@
 | Campo | Valor |
 |-------|-------|
 | Fecha | 2026-09-29 |
-| Fase actual | **Fase 4:** SEO hecho. CI con tests, build, enlaces y e2e. Lighthouse CI aún no. |
+| Fase actual | **Fase 5 preparada en papel.** El homelab no se ha tocado. Falta la confirmación de Edu para desplegar. |
 | Estado | **listo para retomar** |
 | Marca | **kit gana al §9.2 del plan** (verde #1B4D3E, naranja #FF6A13, tinta #1C2B4A, crema #F6F1E7; Space Grotesk + Inter) |
 | Design read | Landing B2B local pymes: tallado, contraste fuerte; tokens kit. Dials: VARIANCE 6 / MOTION 3 / DENSITY 4 |
@@ -43,6 +43,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - ~14:13 — `contact-api` (Hono + SQLite): validación, honeypot, timing, Turnstile si hay secreto, rate limit, aviso ntfy/SMTP si hay config, reintento y purga. 9 tests. El formulario de `/contacto/` llega a `/gracias/` con la API en `:8787`.
 - ~15:00 — SEO: `robots.txt`, JSON-LD (servicio, FAQ, migas, CreativeWork), OG 1200×630 del caso Ana Mari, `noindex` en gracias y 404. `width`/`height` en las tarjetas.
 - ~15:13 — CI: `.github/workflows/ci.yml` corre content:check, vitest, build, enlaces internos y 4 e2e (idioma, teclado del comparador, `?ref=footer`, formulario sin JS). Lighthouse no entra todavía.
+- ~16:15 — Runbook de fase 5 escrito, sin ejecutarlo en el homelab: `docs/RUNBOOK.md`, `infra/deploy.sh`, `infra/backup-leads.sh`, ejemplo de ingress.
 
 ## Decisiones
 
@@ -72,8 +73,8 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 
 1. **No rehacer** el caso Ana Mari, el PDF ni el SEO básico.
 2. Cuando haya secretos: `TURNSTILE_SECRET`, ntfy y SMTP. Falta el widget de Turnstile (site key).
-3. Fase 4 restante: Lighthouse, cuando se mida en móvil. No activar el presupuesto de 95 a ciegas.
-4. Falta confirmar con Edu: fecha exacta de entrega, logo, testimonio, dominio canónico `confeccionesanamari.es`, y más adelante qué hacer con el PDF.
+3. **No ejecutar** `infra/deploy.sh` hasta que Edu confirme el plan de `docs/RUNBOOK.md`.
+4. Falta confirmar con Edu: fecha exacta de entrega, logo, testimonio, dominio canónico `confeccionesanamari.es`, el PDF, y el despliegue en el homelab.
 
 ## Cómo verificar
 

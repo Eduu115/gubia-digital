@@ -14,3 +14,4 @@ test-results
 web/.playwright-cli
 .pnpm-store
 web/public/og
+backups/
