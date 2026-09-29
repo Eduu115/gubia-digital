@@ -11,6 +11,11 @@ services:
       - /var/cache/nginx
       - /var/run
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
   gubia-contact:
     build:
       context: ../contact-api
@@ -21,5 +26,16 @@ services:
     volumes:
       - gubia-leads:/data
     restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:8787/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
 volumes:
   gubia-leads:

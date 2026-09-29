@@ -1,0 +1,21 @@
+# Ejemplo. No está aplicado al cloudflared del homelab.
+# TODO(edu): sustituir DOMINIO. El 443 y el 8443 del servidor ya están ocupados:
+# no publicar puertos nuevos a internet; el túnel entra por Cloudflare.
+#
+# Si cloudflared corre en un contenedor de la misma red Docker que este proyecto,
+# los service apuntan al nombre del contenedor.
+# Si corre como servicio del sistema, cambie esos hostnames por 127.0.0.1 y el
+# puerto que publique compose (hoy la web usa 8080 en el host).
+
+ingress:
+  - hostname: preview.DOMINIO
+    path: ^/api/
+    service: http://gubia-contact:8787
+  - hostname: preview.DOMINIO
+    service: http://gubia-web:80
+  - hostname: DOMINIO
+    path: ^/api/
+    service: http://gubia-contact:8787
+  - hostname: DOMINIO
+    service: http://gubia-web:80
+  - service: http_status:404
