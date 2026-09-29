@@ -3,7 +3,7 @@
 | Campo | Valor |
 |-------|-------|
 | Fecha | 2026-09-29 |
-| Fase actual | **Fase 4:** home en móvil, rendimiento 100 tras imágenes responsive. LCP 1,7 s. Presupuesto de CI apagado. |
+| Fase actual | **Fase 4:** SEO hecho. CI con tests, build, enlaces y e2e. Lighthouse CI aún no. |
 | Estado | **listo para retomar** |
 | Marca | **kit gana al §9.2 del plan** (verde #1B4D3E, naranja #FF6A13, tinta #1C2B4A, crema #F6F1E7; Space Grotesk + Inter) |
 | Design read | Landing B2B local pymes: tallado, contraste fuerte; tokens kit. Dials: VARIANCE 6 / MOTION 3 / DENSITY 4 |
@@ -21,6 +21,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 | `feat/caso-ana-mari` | Caso publicado Confecciones Ana Mari (sin el PDF) |
 | `feat/contact-api` | API de contacto, proxy `/api` y servicio en compose |
 | `feat/seo` | JSON-LD, robots.txt e imagen OG por caso |
+| `feat/ci` | Workflow, comprobación de enlaces y e2e Playwright |
 
 ## Hecho
 
@@ -41,7 +42,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - ~14:10 — Informe PDF de Ana Mari **fuera de la web**. Sigue en el kit. La ficha ya no lo enlaza.
 - ~14:13 — `contact-api` (Hono + SQLite): validación, honeypot, timing, Turnstile si hay secreto, rate limit, aviso ntfy/SMTP si hay config, reintento y purga. 9 tests. El formulario de `/contacto/` llega a `/gracias/` con la API en `:8787`.
 - ~15:00 — SEO: `robots.txt`, JSON-LD (servicio, FAQ, migas, CreativeWork), OG 1200×630 del caso Ana Mari, `noindex` en gracias y 404. `width`/`height` en las tarjetas.
-- ~15:33 — Lighthouse móvil en `/` (build): rendimiento 94 → 100 tras servir el comparador en AVIF/WebP responsive. LCP 3,1 s → 1,7 s. Accesibilidad 96, buenas prácticas 100, SEO 100. CLS 0,007.
+- ~15:13 — CI: `.github/workflows/ci.yml` corre content:check, vitest, build, enlaces internos y 4 e2e (idioma, teclado del comparador, `?ref=footer`, formulario sin JS). Lighthouse no entra todavía.
 
 ## Decisiones
 
@@ -59,6 +60,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - `_demo` no entra en índices ni en la home. Sigue en `/_kit` y, en dev, en `/casos/_demo/`.
 - Formulario: en dev, Vite hace proxy de `/api` a `contact-api` en `:8787`. Sin JS la API responde 303 a `/gracias/`. Si la API no responde, el formulario enseña el email placeholder.
 - Informe PDF de Ana Mari: **no publicar** de momento. Original en `kits/gubia-digital-kit/proyectos/confecciones-ana-mari/Informe-Rediseno-Confecciones-Ana-Mari.pdf`. Comentario en `caso.yaml`. Retomar más adelante (qué se enseña y a quién).
+- Lighthouse CI queda fuera hasta medir la web. No se fija un presupuesto que aún no hemos comprobado.
 - Imagen OG: se genera en `prebuild` con sharp (portada + barra tinta/naranja). Tipografía del rótulo: Helvetica, porque el SVG no embebe Space Grotesk. Salida en `web/public/og/` (gitignored).
 - Comparador: `<Picture>` con AVIF y WebP (480, 960, 1440, 2160). El presupuesto de Lighthouse no se enciende: la home da 100 de rendimiento en una pasada, pero el LCP de laboratorio sigue en 1,7 s (objetivo 1,5 s).
 - Turnstile, ntfy y SMTP quedan apagados hasta que existan secretos en `contact-api/.env` (plantilla en `.env.example`). Sin secreto de Turnstile la API no lo exige.
@@ -70,7 +72,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 
 1. **No rehacer** el caso Ana Mari, el PDF ni el SEO básico.
 2. Cuando haya secretos: `TURNSTILE_SECRET`, ntfy y SMTP. Falta el widget de Turnstile (site key).
-3. Repetir Lighthouse en la ficha del caso y en contacto. No activar el presupuesto automático todavía.
+3. Fase 4 restante: Lighthouse, cuando se mida en móvil. No activar el presupuesto de 95 a ciegas.
 4. Falta confirmar con Edu: fecha exacta de entrega, logo, testimonio, dominio canónico `confeccionesanamari.es`, y más adelante qué hacer con el PDF.
 
 ## Cómo verificar
