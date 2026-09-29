@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import type { Lang } from '../i18n/routes';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const es = lang === 'es';
+---
+
+<BaseLayout
+  lang={lang}
+  title={es ? 'Nosotros' : 'About'}
+  description={es ? 'Quiénes somos y cómo trabajamos en Gubia Digital.' : 'Who we are and how we work at Gubia Digital.'}
+  routeKey="nosotros"
+>
+  <Section>
+    <h1 class="font-display text-4xl font-bold md:text-5xl">{es ? 'Nosotros' : 'About'}</h1>
+    <div class="mt-8 max-w-prose space-y-4 text-tinta/90">
+      <p>
+        {
+          es
+            ? 'Somos un dúo freelance: desarrollo web y consultoría para pymes locales. Tallamos webs a medida, con precio cerrado y sin permanencia.'
+            : 'We are a freelance duo: web development and consulting for local businesses. We craft custom sites, with a fixed price and no lock-in.'
+        }
+      </p>
+      <p>
+        {
+          es
+            ? 'Low cost no significa chapuza: medimos, cuidamos la accesibilidad y entregamos código y dominio a tu nombre.'
+            : 'Low cost does not mean sloppy: we measure, care about accessibility, and hand over code and domain in your name.'
+        }
+      </p>
+      <p class="text-sm text-gris">
+        TODO(edu): nombres, fotos y bio cuando el contrato laboral lo permita. Sin apellidos ni empleador en v1.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,135 @@
+---
+import type { Lang } from '../i18n/routes';
+import { uiT } from '../i18n/ui';
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Button from '../components/ui/Button.astro';
+import Chip from '../components/ui/Chip.astro';
+import FigureStat from '../components/ui/FigureStat.astro';
+import MetricDelta from '../components/case/MetricDelta.astro';
+import StartingPoint from '../components/case/StartingPoint.astro';
+import Testimonial from '../components/case/Testimonial.astro';
+import CaseCard from '../components/case/CaseCard.astro';
+import Comparativa from '../components/mdx/Comparativa.astro';
+import Captura from '../components/mdx/Captura.astro';
+import Metrica from '../components/mdx/Metrica.astro';
+import Nota from '../components/mdx/Nota.astro';
+import { resolveMetric } from '../lib/content';
+import { resolveContentImage } from '../lib/images';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const casos = await getCollection('casos');
+const entry = casos.find((item) => item.id.split('/')[0] === '_demo');
+const portada = entry ? resolveContentImage('casos', '_demo', entry.data.portada) : undefined;
+const metrica = entry?.data.metricas?.[0];
+const meta = metrica ? resolveMetric(metrica, lang) : undefined;
+const path = lang === 'en' ? '/en/_kit' : '/_kit';
+const alternateHref = lang === 'en' ? '/_kit' : '/en/_kit';
+---
+
+<BaseLayout
+  lang={lang}
+  title={uiT('kit.title', lang)}
+  description={uiT('kit.lead', lang)}
+  alternateHref={alternateHref}
+  pathOverride={path}
+  noindex
+>
+  <Section>
+    <p class="text-sm font-semibold text-naranja-oscuro">{uiT('kit.lead', lang)}</p>
+    <h1 class="mt-2 font-display text-4xl font-bold">{uiT('kit.title', lang)}</h1>
+
+    <h2 class="mt-12 font-display text-2xl font-bold">Button</h2>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <Button href="/contacto/">{uiT('nav.cta', lang)}</Button>
+      <Button href="/casos/" variant="secondary">{uiT('nav.casos', lang)}</Button>
+      <Button variant="ghost" type="button">{uiT('nav.close', lang)}</Button>
+    </div>
+
+    <h2 class="mt-12 font-display text-2xl font-bold">Chip</h2>
+    <div class="mt-4 flex gap-2">
+      <Chip>Astro</Chip>
+      <Chip>SEO local</Chip>
+    </div>
+
+    <h2 class="mt-12 font-display text-2xl font-bold">FigureStat</h2>
+    <div class="mt-4">
+      <FigureStat valor="9" etiqueta={lang === 'es' ? 'microservicios' : 'microservices'} />
+    </div>
+
+    {
+      entry && meta && metrica && (
+        <>
+          <h2 class="mt-12 font-display text-2xl font-bold">MetricDelta</h2>
+          <div class="mt-4 max-w-sm">
+            <MetricDelta
+              lang={lang}
+              label={meta.label}
+              before={metrica.antes}
+              after={metrica.despues}
+              unit={meta.unidad}
+              mejor={meta.mejor}
+              fuente={metrica.fuente}
+              fechaAntes={metrica.fechaAntes}
+              fechaDespues={metrica.fechaDespues}
+            />
+          </div>
+          <h2 class="mt-12 font-display text-2xl font-bold">Metrica</h2>
+          <div class="mt-4 max-w-sm">
+            <Metrica id="lcp" caso="_demo" lang={lang} />
+          </div>
+          <h2 class="mt-12 font-display text-2xl font-bold">Comparativa</h2>
+          <div class="mt-4">
+            <Comparativa id="home" caso="_demo" lang={lang} />
+          </div>
+          <h2 class="mt-12 font-display text-2xl font-bold">Captura</h2>
+          <div class="mt-4">
+            <Captura id="detalle" caso="_demo" lang={lang} />
+          </div>
+          <h2 class="mt-12 font-display text-2xl font-bold">StartingPoint</h2>
+          <div class="mt-4">
+            <StartingPoint lang={lang} descripcion={entry.data.puntoDePartida.descripcion[lang]} />
+          </div>
+          {entry.data.testimonio && (
+            <>
+              <h2 class="mt-12 font-display text-2xl font-bold">Testimonial</h2>
+              <div class="mt-4">
+                <Testimonial
+                  autor={entry.data.testimonio.autor}
+                  cargo={entry.data.testimonio.cargo[lang]}
+                  texto={entry.data.testimonio.texto[lang]}
+                />
+              </div>
+            </>
+          )}
+          {portada && (
+            <>
+              <h2 class="mt-12 font-display text-2xl font-bold">CaseCard</h2>
+              <div class="mt-4 max-w-md">
+                <CaseCard
+                  lang={lang}
+                  slug="_demo"
+                  cliente={entry.data.cliente}
+                  sectorKey={entry.data.sector}
+                  resumen={entry.data.puntoDePartida.descripcion[lang]}
+                  portadaSrc={portada.src}
+                  portadaAlt={entry.data.puntoDePartida.descripcion[lang]}
+                />
+              </div>
+            </>
+          )}
+        </>
+      )
+    }
+
+    <h2 class="mt-12 font-display text-2xl font-bold">Nota</h2>
+    <div class="mt-4">
+      <Nota>{uiT('kit.lead', lang)}</Nota>
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,71 @@
+---
+import type { Lang } from '../../i18n/routes';
+import { localizedPath } from '../../i18n/utils';
+import { uiT } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  slug: string;
+  cliente: string;
+  sectorKey: string;
+  resumen: string;
+  portadaSrc: string;
+  portadaAlt: string;
+  portadaWidth?: number;
+  portadaHeight?: number;
+  metricLabel?: string;
+  metricBefore?: string;
+  metricAfter?: string;
+}
+
+const {
+  lang,
+  slug,
+  cliente,
+  sectorKey,
+  resumen,
+  portadaSrc,
+  portadaAlt,
+  portadaWidth,
+  portadaHeight,
+  metricLabel,
+  metricBefore,
+  metricAfter,
+} = Astro.props;
+---
+
+<a
+  href={localizedPath('caso', lang, { slug })}
+  class="group block overflow-hidden rounded-[var(--radius-md)] border border-linea bg-blanco transition-shadow hover:shadow-[var(--shadow-soft)]"
+>
+  <div class="aspect-[16/10] overflow-hidden bg-linea/40">
+    <img
+      src={portadaSrc}
+      alt={portadaAlt}
+      width={portadaWidth}
+      height={portadaHeight}
+      class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="p-5">
+    <p class="text-xs font-semibold uppercase tracking-wide text-gris">
+      {uiT(`sector.${sectorKey}`, lang)}
+    </p>
+    <h3 class="mt-1 font-display text-xl font-bold text-tinta">{cliente}</h3>
+    <p class="mt-2 text-sm text-tinta/80 line-clamp-2">{resumen}</p>
+    {
+      metricBefore && metricAfter && (
+        <p class="mt-3 text-sm font-semibold">
+          <span class="text-gris">{metricBefore}</span>
+          <span class="mx-1 text-gris/50" aria-hidden="true">
+            →
+          </span>
+          <span class="text-verde">{metricAfter}</span>
+          {metricLabel && <span class="ml-1 font-normal text-gris">({metricLabel})</span>}
+        </p>
+      )
+    }
+  </div>
+</a>

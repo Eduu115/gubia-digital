@@ -1,0 +1,101 @@
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/inter';
+@import 'tailwindcss';
+
+@theme {
+  --color-verde: #1b4d3e;
+  --color-verde-claro: #2f7d65;
+  --color-naranja: #ff6a13;
+  --color-naranja-oscuro: #d8540a;
+  --color-tinta: #1c2b4a;
+  --color-crema: #f6f1e7;
+  --color-blanco: #ffffff;
+  --color-gris: #6b7280;
+  --color-linea: #e7e2d8;
+  --color-papel: #f6f1e7;
+
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, sans-serif;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-soft: 0 8px 30px rgb(28 43 74 / 0.1);
+
+  --container-max: 75rem; /* 1200px */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-tinta);
+    background-color: var(--color-crema);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--color-tinta);
+  }
+
+  a {
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-naranja);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-naranja) 35%, transparent);
+  }
+}
+
+@layer utilities {
+  .gubia-underline {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 8' fill='none'%3E%3Cpath d='M2 5.5C30 1.5 70 1.5 118 5.5' stroke='%23FF6A13' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 100% 0.35em;
+    padding-bottom: 0.12em;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}

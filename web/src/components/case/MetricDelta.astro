@@ -1,0 +1,66 @@
+---
+import type { Lang } from '../../i18n/routes';
+import { formatNumber } from '../../i18n/utils';
+import { uiT } from '../../i18n/ui';
+import { metricImprovement } from '../../lib/metrics';
+
+interface Props {
+  lang: Lang;
+  label: string;
+  before: number;
+  after: number;
+  unit?: string;
+  mejor: 'menor' | 'mayor';
+  fuente: string;
+  fechaAntes: string;
+  fechaDespues: string;
+}
+
+const { lang, label, before, after, unit = '', mejor, fuente, fechaAntes, fechaDespues } = Astro.props;
+
+const { improved, pct, times } = metricImprovement(before, after, mejor);
+
+const beforeFmt = formatNumber(before, lang, { maximumFractionDigits: 2 });
+const afterFmt = formatNumber(after, lang, { maximumFractionDigits: 2 });
+
+function formatDay(iso: string): string {
+  const [year, month, day] = iso.split('-').map(Number);
+  if (!year || !month || !day) return iso;
+  return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(year, month - 1, day));
+}
+---
+
+<article class="rounded-[var(--radius-md)] border border-linea bg-blanco p-5">
+  <h3 class="font-display text-lg font-bold text-tinta">{label}</h3>
+  <p class="mt-4 flex flex-wrap items-end gap-3 text-2xl font-bold tracking-tight tabular-nums">
+    <span class="text-gris">
+      <span class="sr-only">{uiT('metric.before', lang)}: </span>
+      {beforeFmt}{unit}
+    </span>
+    <span class="text-gris/50" aria-hidden="true">→</span>
+    <span class:list={[improved ? 'text-verde' : 'text-tinta']}>
+      <span class="sr-only">{uiT('metric.after', lang)}: </span>
+      {afterFmt}{unit}
+    </span>
+  </p>
+  {
+    improved && (
+      <p class="mt-2 text-sm font-semibold text-verde">
+        {times && times >= 1.5
+          ? lang === 'es'
+            ? `${formatNumber(Number(times.toFixed(1)), lang)}× más rápido`
+            : `${formatNumber(Number(times.toFixed(1)), lang)}× faster`
+          : lang === 'es'
+            ? `${pct} % de mejora`
+            : `${pct} % improvement`}
+      </p>
+    )
+  }
+  <p class="mt-3 text-xs text-gris">
+    {fuente} · {formatDay(fechaAntes)} → {formatDay(fechaDespues)}
+  </p>
+</article>

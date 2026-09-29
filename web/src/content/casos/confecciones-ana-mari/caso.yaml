@@ -1,0 +1,99 @@
+cliente: "Confecciones Ana Mari"
+anonimo: false
+publicar: true
+destacado: true
+orden: 1
+sector: comercio
+ubicacion: "Getafe"
+fecha: "2026-09"
+servicios: [rediseno]
+urlEnVivo: "https://confemerana.es/"
+portada: ./img/portada.webp
+
+permisos:
+  publicarCaso: true
+  mostrarLogo: false
+  testimonio: false
+  fechaConsentimiento: "2026-09-29"
+  medio: "instrucción del titular de Gubia"
+
+puntoDePartida:
+  tipo: web
+  descripcion:
+    es: "Una plantilla de WordPress con tienda online, a medias: mezclaba idiomas y no decía qué se vende ni dónde está la tienda."
+    en: "A half-finished WordPress template with an online shop. It mixed languages and never said what the shop sells or where it is."
+
+comparativas:
+  - id: home
+    dispositivo: desktop
+    antes: ./img/antes-home-desktop.webp
+    despues: ./img/despues-home-desktop.webp
+    alt:
+      antes:
+        es: "Inicio anterior titulado Home, con un menú largo y entradas de la plantilla"
+        en: "Old homepage titled Home, with a long menu and leftover template links"
+      despues:
+        es: "Inicio nuevo de la mercería en Getafe, con la propuesta de tallas y arreglos y botones de WhatsApp y catálogo"
+        en: "New Getafe haberdashery homepage, with sizes and alterations up front and buttons for WhatsApp and the catalogue"
+    pie:
+      es: "De un menú sin terminar a una portada que dice qué hay en la tienda."
+      en: "From an unfinished menu to a homepage that says what the shop sells."
+  - id: catalogo
+    dispositivo: desktop
+    antes: ./img/antes-catalogo-desktop.webp
+    despues: ./img/despues-catalogo-desktop.webp
+    alt:
+      antes:
+        es: "Tienda online anterior, con carrito y botones de producto"
+        en: "Old online shop, with a cart and product buttons"
+      despues:
+        es: "Catálogo nuevo, con prendas filtrables y sin carrito"
+        en: "New catalogue, with filterable garments and no cart"
+    pie:
+      es: "El escaparate se mira. La venta se cierra en la tienda o por WhatsApp."
+      en: "The catalogue is for looking. The sale closes in the shop or on WhatsApp."
+  - id: arreglos
+    dispositivo: desktop
+    antes: ./img/antes-arreglos-desktop.webp
+    despues: ./img/despues-arreglos-desktop.webp
+    alt:
+      antes:
+        es: "Página de reparaciones anterior, un texto suelto en el menú"
+        en: "Old repairs page, a loose block of text in the menu"
+      despues:
+        es: "Sección nueva de arreglos, con servicios y plazo de entrega"
+        en: "New alterations section, with services and a turnaround time"
+    pie:
+      es: "Cremalleras, ojetes, broches y dobladillos, con un plazo de 24 a 72 horas."
+      en: "Zips, eyelets, press studs and hems, with a 24 to 72 hour turnaround."
+  - id: nosotros
+    dispositivo: desktop
+    antes: ./img/antes-nosotros-desktop.webp
+    despues: ./img/despues-nosotros-desktop.webp
+    alt:
+      antes:
+        es: "Texto de «sobre nosotros» encajonado en una columna estrecha"
+        en: "An about-us text squeezed into a narrow column"
+      despues:
+        es: "Historia del taller en La Alhóndiga, con fotos del local"
+        en: "The workshop's story in La Alhóndiga, with photos of the shop"
+    pie:
+      es: "Más de 30 años en el barrio, contados con el local delante."
+      en: "More than 30 years in the neighbourhood, told with the shop in view."
+  - id: contacto
+    dispositivo: desktop
+    antes: ./img/antes-contacto-desktop.webp
+    despues: ./img/despues-contacto-desktop.webp
+    alt:
+      antes:
+        es: "Mapa suelto en la web anterior, sin el horario a la vista"
+        en: "A loose map on the old site, with no opening hours in view"
+      despues:
+        es: "Contacto nuevo con horario, dirección, teléfono, email y mapa"
+        en: "New contact page with hours, address, phone, email and a map"
+    pie:
+      es: "El horario deja de ser una llamada."
+      en: "Opening hours are no longer a phone call."
+
+# Informe PDF apartado, no publicar todavía.
+# Original: kits/gubia-digital-kit/proyectos/confecciones-ana-mari/Informe-Rediseno-Confecciones-Ana-Mari.pdf

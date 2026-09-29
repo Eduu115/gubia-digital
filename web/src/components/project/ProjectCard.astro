@@ -1,0 +1,39 @@
+---
+import type { Lang } from '../../i18n/routes';
+import { localizedPath } from '../../i18n/utils';
+import { uiT } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  slug: string;
+  nombre: string;
+  tagline: string;
+  estado: string;
+  portadaSrc: string;
+  portadaWidth?: number;
+  portadaHeight?: number;
+}
+
+const { lang, slug, nombre, tagline, estado, portadaSrc, portadaWidth, portadaHeight } = Astro.props;
+---
+
+<a
+  href={localizedPath('proyecto', lang, { slug })}
+  class="group block overflow-hidden rounded-[var(--radius-md)] border border-linea bg-blanco hover:shadow-[var(--shadow-soft)]"
+>
+  <div class="aspect-[16/9] overflow-hidden bg-verde/10">
+    <img
+      src={portadaSrc}
+      alt={nombre}
+      width={portadaWidth}
+      height={portadaHeight}
+      class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+      loading="lazy"
+    />
+  </div>
+  <div class="p-5">
+    <p class="text-xs font-semibold text-verde">{uiT(`estado.${estado}`, lang)}</p>
+    <h3 class="mt-1 font-display text-xl font-bold">{nombre}</h3>
+    <p class="mt-2 text-sm text-gris">{tagline}</p>
+  </div>
+</a>

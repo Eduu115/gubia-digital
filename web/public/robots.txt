@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# TODO(edu): dominio real. Debe coincidir con `site` en astro.config.mjs
+Sitemap: https://gubiadigital.example/sitemap-index.xml

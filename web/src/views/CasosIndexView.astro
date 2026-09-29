@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import CaseCard from '../components/case/CaseCard.astro';
+import {
+  getPublishedCasos,
+  casoSlug,
+  getCasoTexto,
+  resolveMetric,
+} from '../lib/content';
+import { resolveContentImage } from '../lib/images';
+import { formatNumber } from '../i18n/utils';
+import { uiT } from '../i18n/ui';
+import type { Lang } from '../i18n/routes';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const casos = await getPublishedCasos();
+const cards = [];
+for (const c of casos) {
+  const slug = casoSlug(c);
+  const texto = await getCasoTexto(slug, lang);
+  const portada = resolveContentImage('casos', slug, c.data.portada);
+  const m = c.data.metricas?.[0];
+  const meta = m ? resolveMetric(m, lang) : null;
+  cards.push({
+    slug,
+    cliente: c.data.anonimo ? c.data.clienteAnonimo?.[lang] ?? c.data.cliente : c.data.cliente,
+    sectorKey: c.data.sector,
+    resumen: texto?.data.resumen ?? '',
+    portadaSrc: portada?.src ?? '',
+    portadaAlt: texto?.data.titulo ?? c.data.cliente,
+    portadaWidth: portada?.width,
+    portadaHeight: portada?.height,
+    metricBefore: m && meta ? `${formatNumber(m.antes, lang)}${meta.unidad}` : undefined,
+    metricAfter: m && meta ? `${formatNumber(m.despues, lang)}${meta.unidad}` : undefined,
+    metricLabel: meta?.label,
+  });
+}
+---
+
+<BaseLayout
+  lang={lang}
+  title={uiT('nav.casos', lang)}
+  description={uiT('casos.empty', lang)}
+  routeKey="casos"
+>
+  <Section>
+    <h1 class="font-display text-4xl font-bold">{uiT('nav.casos', lang)}</h1>
+    {
+      cards.length === 0 ? (
+        <p class="mt-6 text-gris">{uiT('casos.empty', lang)}</p>
+      ) : (
+        <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {cards.map((c) => (
+            <CaseCard lang={lang} {...c} />
+          ))}
+        </div>
+      )
+    }
+  </Section>
+</BaseLayout>
