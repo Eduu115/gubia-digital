@@ -62,6 +62,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - Informe PDF de Ana Mari: **no publicar** de momento. Original en `kits/gubia-digital-kit/proyectos/confecciones-ana-mari/Informe-Rediseno-Confecciones-Ana-Mari.pdf`. Comentario en `caso.yaml`. Retomar más adelante (qué se enseña y a quién).
 - Lighthouse CI queda fuera hasta medir la web. No se fija un presupuesto que aún no hemos comprobado.
 - Imagen OG: se genera en `prebuild` con sharp (portada + barra tinta/naranja). Tipografía del rótulo: Helvetica, porque el SVG no embebe Space Grotesk. Salida en `web/public/og/` (gitignored).
+- Comparador: `<Picture>` con AVIF y WebP (480, 960, 1440, 2160). El presupuesto de Lighthouse no se enciende: la home da 100 de rendimiento en una pasada, pero el LCP de laboratorio sigue en 1,7 s (objetivo 1,5 s).
 - Turnstile, ntfy y SMTP quedan apagados hasta que existan secretos en `contact-api/.env` (plantilla en `.env.example`). Sin secreto de Turnstile la API no lo exige.
 - Astro 7 (Sätteri): no hace falta `@astrojs/markdown-remark`. Los atributos `caso`/`lang` los pone un plugin de Vite (`astro.config.mjs`).
 - `/_kit` se inyecta solo si `command === 'dev'`.
