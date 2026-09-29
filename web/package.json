@@ -13,8 +13,10 @@
     "check": "astro check",
     "content:check": "tsx scripts/content-check.ts",
     "og": "tsx scripts/og.ts",
+    "links": "tsx scripts/links.ts",
     "prebuild": "tsx scripts/content-check.ts && tsx scripts/og.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "e2e": "node scripts/e2e.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.2",
@@ -37,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "tsx": "^4.23.15",
     "vitest": "^5.0.2",
     "yaml": "^2.9.1"
