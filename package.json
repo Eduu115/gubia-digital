@@ -1,0 +1,19 @@
+{
+  "name": "gubiadigital",
+  "private": true,
+  "packageManager": "pnpm@12.6.0",
+  "scripts": {
+    "dev": "pnpm --filter web exec astro dev --host 127.0.0.1 --port 4321",
+    "build": "pnpm --filter web build",
+    "preview": "pnpm --filter web preview",
+    "content:check": "pnpm --filter web content:check",
+    "check": "pnpm --filter web check",
+    "test": "pnpm --filter web test"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  }
+}

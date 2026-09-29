@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import ContactForm from '../components/form/ContactForm.astro';
+import type { Lang } from '../i18n/routes';
+import { uiT } from '../i18n/ui';
+import { site } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+---
+
+<BaseLayout lang={lang} title={uiT('nav.contacto', lang)} description={uiT('cta.sub', lang)} routeKey="contacto">
+  <Section>
+    <h1 class="font-display text-4xl font-bold">{uiT('cta.title', lang)}</h1>
+    <p class="mt-3 max-w-prose text-gris">{uiT('cta.sub', lang)}</p>
+    <p class="mt-4 text-sm">
+      <a class="font-semibold text-verde underline" href={`mailto:${site.email}`}>{site.email}</a>
+    </p>
+    <div class="mt-10">
+      <ContactForm lang={lang} />
+    </div>
+  </Section>
+</BaseLayout>

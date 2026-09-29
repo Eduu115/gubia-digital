@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import ProjectCard from '../components/project/ProjectCard.astro';
+import type { Lang } from '../i18n/routes';
+import { uiT } from '../i18n/ui';
+import { getPublishedProyectos, proyectoSlug } from '../lib/content';
+import { resolveContentImage } from '../lib/images';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const proyectos = await getPublishedProyectos();
+---
+
+<BaseLayout lang={lang} title={uiT('nav.proyectos', lang)} description={uiT('proyectos.title', lang)} routeKey="proyectos">
+  <Section>
+    <h1 class="font-display text-4xl font-bold">{uiT('nav.proyectos', lang)}</h1>
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {
+        proyectos.map((p) => {
+          const slug = proyectoSlug(p);
+          const portada = resolveContentImage('proyectos', slug, p.data.portada);
+          return (
+            <ProjectCard
+              lang={lang}
+              slug={slug}
+              nombre={p.data.nombre}
+              tagline={p.data.tagline[lang]}
+              estado={p.data.estado}
+              portadaSrc={portada?.src ?? ''}
+            />
+          );
+        })
+      }
+    </div>
+    {
+      proyectos.length === 0 && (
+        <p class="mt-6 text-gris">TODO(edu): publicar proyectos propios (API Arena, …).</p>
+      )
+    }
+  </Section>
+</BaseLayout>

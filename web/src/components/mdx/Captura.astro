@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import { resolveContentImage } from '../../lib/images';
+import type { Lang } from '../../i18n/routes';
+
+interface Props {
+  id: string;
+  caso: string;
+  lang: Lang;
+}
+
+const { id, caso, lang } = Astro.props;
+const entries = await getCollection('casos');
+const entry = entries.find((item) => item.id.split('/')[0] === caso);
+const captura = (entry?.data.capturas ?? []).find((item) => item.id === id);
+
+if (!entry || !captura) {
+  throw new Error(`Captura "${id}" no existe en el caso "${caso}"`);
+}
+
+const image = resolveContentImage('casos', caso, captura.src);
+if (!image) {
+  throw new Error(`Captura "${id}" del caso "${caso}" no tiene imagen resoluble`);
+}
+
+const movil = captura.dispositivo === 'movil';
+---
+
+<figure class:list={['overflow-hidden rounded-[var(--radius-md)] border border-linea bg-blanco', movil && 'mx-auto max-w-xs']}>
+  {
+    movil ? (
+      <div class="mx-auto my-3 h-1.5 w-16 rounded-full bg-linea" aria-hidden="true" />
+    ) : (
+      <div class="flex items-center gap-1.5 border-b border-linea bg-crema px-3 py-2" aria-hidden="true">
+        <span class="h-2.5 w-2.5 rounded-full bg-naranja/80" />
+        <span class="h-2.5 w-2.5 rounded-full bg-tinta/20" />
+        <span class="h-2.5 w-2.5 rounded-full bg-verde/60" />
+      </div>
+    )
+  }
+  <img
+    src={image.src}
+    alt={captura.alt[lang]}
+    width={image.width}
+    height={image.height}
+    class="w-full"
+    loading="lazy"
+    decoding="async"
+  />
+  {captura.pie?.[lang] && <figcaption class="px-4 py-2 text-sm text-gris">{captura.pie[lang]}</figcaption>}
+</figure>

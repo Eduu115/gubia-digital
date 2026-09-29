@@ -1,0 +1,32 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { Lang } from '../../i18n/routes';
+import { uiT } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  descripcion: string;
+  image?: ImageMetadata;
+  alt?: string;
+}
+
+const { lang, descripcion, image, alt = '' } = Astro.props;
+---
+
+<article class="rounded-[var(--radius-md)] border border-linea bg-blanco p-6">
+  <h2 class="font-display text-2xl font-bold">{uiT('starting.title', lang)}</h2>
+  <p class="mt-3 max-w-prose text-tinta/90">{descripcion}</p>
+  {
+    image && (
+      <img
+        src={image.src}
+        alt={alt}
+        width={image.width}
+        height={image.height}
+        class="mt-6 w-full rounded-[var(--radius-sm)] border border-linea"
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
+</article>

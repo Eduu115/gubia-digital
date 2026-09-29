@@ -1,0 +1,12 @@
+---
+import ProjectView from '../../views/ProjectView.astro';
+import { getPublishedProyectos, proyectoSlug } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const proyectos = await getPublishedProyectos();
+  return proyectos.map((p) => ({ params: { slug: proyectoSlug(p) } }));
+}
+
+const { slug } = Astro.params;
+---
+<ProjectView lang="es" slug={slug!} />

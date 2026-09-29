@@ -1,0 +1,217 @@
+---
+import type { Lang } from '../../i18n/routes';
+import { uiT } from '../../i18n/ui';
+import { localizedPath } from '../../i18n/utils';
+import Button from '../ui/Button.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const action = '/api/contact';
+const ts = Date.now().toString();
+
+const needs = ['nueva', 'rediseno', 'tienda', 'seo', 'mantenimiento', 'otra'] as const;
+---
+
+<form
+  class="contact-form relative mx-auto max-w-2xl space-y-5"
+  method="post"
+  action={action}
+  data-enhanced
+>
+  <input type="hidden" name="lang" value={lang} />
+  <input type="hidden" name="origen" value={Astro.url.pathname} />
+  <input type="hidden" name="ts" value={ts} />
+  <input type="hidden" name="ref" value="" />
+  <input type="hidden" name="utm_source" value="" />
+  <input type="hidden" name="utm_medium" value="" />
+  <input type="hidden" name="utm_campaign" value="" />
+  <div class="absolute -left-[9999px]" aria-hidden="true">
+    <label>Company website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="grid gap-5 md:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="nombre" class="text-sm font-semibold text-tinta">{uiT('form.name', lang)} *</label>
+      <input
+        id="nombre"
+        name="nombre"
+        required
+        autocomplete="name"
+        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="email" class="text-sm font-semibold text-tinta">{uiT('form.email', lang)} *</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        required
+        autocomplete="email"
+        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+      />
+    </div>
+  </div>
+
+  <div class="grid gap-5 md:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="telefono" class="text-sm font-semibold text-tinta">
+        {uiT('form.phone', lang)}
+        <span class="font-normal text-gris">({uiT('form.optional', lang)})</span>
+      </label>
+      <input
+        id="telefono"
+        name="telefono"
+        type="tel"
+        autocomplete="tel"
+        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+      />
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="negocio" class="text-sm font-semibold text-tinta">{uiT('form.business', lang)} *</label>
+      <input
+        id="negocio"
+        name="negocio"
+        required
+        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+      />
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="tipo" class="text-sm font-semibold text-tinta">{uiT('form.businessType', lang)} *</label>
+    <input
+      id="tipo"
+      name="tipo"
+      required
+      class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+    />
+  </div>
+
+  <fieldset class="flex flex-col gap-2">
+    <legend class="text-sm font-semibold text-tinta">{uiT('form.need', lang)} *</legend>
+    <div class="grid gap-2 sm:grid-cols-2">
+      {
+        needs.map((n) => (
+          <label class="flex items-center gap-2 text-sm text-tinta">
+            <input type="checkbox" name="necesitas" value={n} class="size-4 accent-verde" />
+            {uiT(`form.need.${n}`, lang)}
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="flex flex-col gap-2">
+    <label for="web" class="text-sm font-semibold text-tinta">
+      {uiT('form.web', lang)}
+      <span class="font-normal text-gris">({uiT('form.optional', lang)})</span>
+    </label>
+    <input
+      id="web"
+      name="web"
+      type="url"
+      placeholder="https://"
+      class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+    />
+  </div>
+
+  <div class="grid gap-5 md:grid-cols-2">
+    <div class="flex flex-col gap-2">
+      <label for="presupuesto" class="text-sm font-semibold text-tinta">{uiT('form.budget', lang)}</label>
+      <select
+        id="presupuesto"
+        name="presupuesto"
+        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+      >
+        <option value="">{uiT('form.budget.unknown', lang)}</option>
+        <option value="lt-1k">&lt; 1.000 €</option>
+        <option value="1-3k">1.000-3.000 €</option>
+        <option value="3-6k">3.000-6.000 €</option>
+        <option value="gt-6k">&gt; 6.000 €</option>
+      </select>
+    </div>
+    <div class="flex flex-col gap-2">
+      <label for="plazo" class="text-sm font-semibold text-tinta">{uiT('form.timeline', lang)}</label>
+      <select
+        id="plazo"
+        name="plazo"
+        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+      >
+        <option value="relaxed">{uiT('form.timeline.relaxed', lang)}</option>
+        <option value="month">{uiT('form.timeline.month', lang)}</option>
+        <option value="urgent">{uiT('form.timeline.urgent', lang)}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    <label for="mensaje" class="text-sm font-semibold text-tinta">{uiT('form.message', lang)}</label>
+    <textarea
+      id="mensaje"
+      name="mensaje"
+      rows="4"
+      class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
+    ></textarea>
+  </div>
+
+  <label class="flex items-start gap-2 text-sm text-tinta">
+    <input type="checkbox" name="consentimiento" required class="mt-1 size-4 accent-verde" />
+    <span>
+      {uiT('form.consent', lang)}
+      (
+      <a class="underline underline-offset-2" href={localizedPath('privacidad', lang)}>
+        {uiT('footer.privacidad', lang)}
+      </a>
+      )
+    </span>
+  </label>
+
+  <p class="form-status hidden text-sm font-medium text-naranja-oscuro" role="status" data-form-status></p>
+
+  <Button type="submit" variant="primary">{uiT('form.submit', lang)}</Button>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form[data-enhanced]');
+  if (form) {
+    const params = new URLSearchParams(location.search);
+    for (const key of ['ref', 'utm_source', 'utm_medium', 'utm_campaign'] as const) {
+      const input = form.querySelector<HTMLInputElement>(`input[name="${key}"]`);
+      const value = params.get(key);
+      if (input && value) input.value = value;
+    }
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = form.querySelector<HTMLElement>('[data-form-status]');
+      const btn = form.querySelector('button[type="submit"]');
+      const lang = form.querySelector<HTMLInputElement>('input[name="lang"]')?.value || 'es';
+      if (btn) btn.setAttribute('disabled', 'true');
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (res.ok || res.redirected || res.status === 303) {
+          window.location.href = lang === 'en' ? '/en/thanks/' : '/gracias/';
+          return;
+        }
+        throw new Error('fail');
+      } catch {
+        if (status) {
+          status.textContent =
+            lang === 'es'
+              ? 'No hemos podido enviar el formulario. Escríbenos a hola@gubiadigital.example. TODO(edu): email real.'
+              : 'We could not send the form. Email hola@gubiadigital.example. TODO(edu): real email.';
+          status.classList.remove('hidden');
+        }
+      } finally {
+        if (btn) btn.removeAttribute('disabled');
+      }
+    });
+  }
+</script>

@@ -1,0 +1,68 @@
+---
+import type { Lang } from '../../i18n/routes';
+import { localizedPath } from '../../i18n/utils';
+import { uiT } from '../../i18n/ui';
+import { site } from '../../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const nav = [
+  { href: localizedPath('casos', lang), label: uiT('nav.casos', lang) },
+  { href: localizedPath('proyectos', lang), label: uiT('nav.proyectos', lang) },
+  { href: localizedPath('nosotros', lang), label: uiT('nav.nosotros', lang) },
+  { href: localizedPath('contacto', lang), label: uiT('nav.contacto', lang) },
+];
+
+const legal = [
+  { href: localizedPath('avisoLegal', lang), label: uiT('footer.aviso', lang) },
+  { href: localizedPath('privacidad', lang), label: uiT('footer.privacidad', lang) },
+  { href: localizedPath('cookies', lang), label: uiT('footer.cookies', lang) },
+];
+---
+
+<footer class="mt-auto bg-verde text-crema">
+  <div class="mx-auto grid max-w-[var(--container-max)] gap-10 px-4 py-14 md:grid-cols-3 md:px-6">
+    <div>
+      <img
+        src="/brand/lockup-horizontal-a-blanco.svg"
+        alt="gubia digital"
+        width="180"
+        height="40"
+        class="h-9 w-auto"
+      />
+      <p class="mt-4 max-w-xs text-sm text-crema/85">{uiT('footer.tagline', lang)}</p>
+      <p class="mt-4 text-sm">
+        <a class="underline decoration-naranja/60 underline-offset-4 hover:decoration-naranja" href={`mailto:${site.email}`}>
+          {site.email}
+        </a>
+      </p>
+    </div>
+
+    <div>
+      <p class="font-display text-sm font-bold tracking-wide">{uiT('footer.nav', lang)}</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        {nav.map((i) => (
+          <li><a class="hover:text-blanco" href={i.href}>{i.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <p class="font-display text-sm font-bold tracking-wide">{uiT('footer.legal', lang)}</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        {legal.map((i) => (
+          <li><a class="hover:text-blanco" href={i.href}>{i.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-crema/15">
+    <p class="mx-auto max-w-[var(--container-max)] px-4 py-4 text-xs text-crema/70 md:px-6">
+      © {new Date().getFullYear()} {uiT('footer.rights', lang)}
+    </p>
+  </div>
+</footer>

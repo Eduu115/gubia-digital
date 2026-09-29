@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeView from '../views/HomeView.astro';
+import { uiT } from '../i18n/ui';
+
+const lang = 'es' as const;
+---
+
+<BaseLayout
+  lang={lang}
+  title={uiT('hero.title', lang)}
+  description={uiT('hero.sub', lang)}
+  routeKey="home"
+>
+  <HomeView lang={lang} />
+</BaseLayout>

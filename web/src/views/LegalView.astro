@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import type { Lang, RouteKey } from '../i18n/routes';
+import { uiT } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  routeKey: RouteKey;
+  title: string;
+}
+
+const { lang, routeKey, title } = Astro.props;
+---
+
+<BaseLayout lang={lang} title={title} description={uiT('legal.placeholder', lang)} routeKey={routeKey}>
+  <Section>
+    <h1 class="font-display text-4xl font-bold">{title}</h1>
+    <div class="mt-8 max-w-prose space-y-4 text-sm text-tinta/90">
+      <p>{uiT('legal.placeholder', lang)}</p>
+      <p>
+        {'{{TITULAR}}'} · {'{{NIF}}'} · {'{{DOMICILIO}}'} · {'{{EMAIL}}'}
+      </p>
+      <p class="text-gris">TODO(edu): redactar textos legales reales cuando exista titular.</p>
+    </div>
+  </Section>
+</BaseLayout>

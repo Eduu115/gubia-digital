@@ -1,0 +1,73 @@
+# Demo ficticia — no publicar. Solo para maquetar en DEV.
+cliente: "Panadería Demo"
+anonimo: false
+publicar: false
+destacado: false
+orden: 1
+sector: hosteleria
+ubicacion: "Madrid"
+fecha: "2026-10"
+duracionSemanas: 4
+servicios: [rediseno, seo-local]
+stack: [Astro, Node.js]
+portada: ./img/portada.webp
+
+permisos:
+  publicarCaso: false
+  mostrarLogo: false
+  testimonio: true
+
+puntoDePartida:
+  tipo: web
+  descripcion:
+    es: "Datos ficticios de demo. Una web antigua lenta y poco usable en móvil."
+    en: "Fictional demo data. An old slow site that broke on mobile."
+
+comparativas:
+  - id: home
+    dispositivo: desktop
+    antes: ./img/antes-home-desktop.webp
+    despues: ./img/despues-home-desktop.webp
+    alt:
+      antes:
+        es: "Rectángulo azul oscuro. Imagen de relleno para maquetar, no es un cliente."
+        en: "Dark blue rectangle. Filler image for layout, not a client."
+      despues:
+        es: "Rectángulo verde. Imagen de relleno para maquetar, no es un cliente."
+        en: "Green rectangle. Filler image for layout, not a client."
+    pie:
+      es: "Imágenes de demostración (no son un cliente publicado)."
+      en: "Demonstration images (not a published client)."
+
+capturas:
+  - id: detalle
+    dispositivo: desktop
+    src: ./img/despues-home-desktop.webp
+    alt:
+      es: "Captura de relleno del resultado de maqueta, en un marco de navegador"
+      en: "Filler capture of the layout result, in a browser frame"
+    pie:
+      es: "Detalle de demostración."
+      en: "Demonstration detail."
+
+metricas:
+  - clave: lcp
+    antes: 4.2
+    despues: 0.9
+    fuente: "Demo ficticia · no usar como prueba social"
+    fechaAntes: "2026-09-01"
+    fechaDespues: "2026-10-18"
+  - clave: lighthouse-accesibilidad
+    antes: 61
+    despues: 100
+    fuente: "Demo ficticia · no usar como prueba social"
+    fechaAntes: "2026-09-01"
+    fechaDespues: "2026-10-18"
+
+testimonio:
+  autor: "Lucía P. (demo)"
+  cargo: { es: "Propietaria", en: "Owner" }
+  idiomaOriginal: es
+  texto:
+    es: "Texto de demostración. No es un testimonio real."
+    en: "Demonstration text. Not a real testimonial."

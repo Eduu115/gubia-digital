@@ -1,0 +1,22 @@
+---
+interface Props {
+  id?: string;
+  tone?: 'papel' | 'tinta' | 'verde';
+  class?: string;
+  as?: 'section' | 'div';
+}
+
+const { id, tone = 'papel', class: className = '', as: Tag = 'section' } = Astro.props;
+
+const tones = {
+  papel: 'bg-crema text-tinta',
+  tinta: 'bg-tinta text-crema',
+  verde: 'bg-verde text-crema',
+};
+---
+
+<Tag id={id} class:list={['py-16 md:py-24', tones[tone], className]}>
+  <div class="mx-auto max-w-[var(--container-max)] px-4 md:px-6">
+    <slot />
+  </div>
+</Tag>

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import type { Lang } from '../i18n/routes';
+import { uiT } from '../i18n/ui';
+import {
+  getPublishedProyectos,
+  proyectoSlug,
+  getProyectoTexto,
+} from '../lib/content';
+import { resolveContentImage } from '../lib/images';
+import { render } from 'astro:content';
+import { localizedPath } from '../i18n/utils';
+import FigureStat from '../components/ui/FigureStat.astro';
+
+interface Props { lang: Lang; slug: string }
+const { lang, slug } = Astro.props;
+const proyectos = await getPublishedProyectos();
+const entry = proyectos.find((p) => proyectoSlug(p) === slug);
+if (!entry) return Astro.redirect(localizedPath('proyectos', lang));
+const texto = await getProyectoTexto(slug, lang);
+if (!texto) return Astro.redirect(localizedPath('proyectos', lang));
+const { Content } = await render(texto);
+const portada = resolveContentImage('proyectos', slug, entry.data.portada);
+---
+
+<BaseLayout lang={lang} title={entry.data.nombre} description={texto.data.descripcionSeo} routeKey="proyecto" slug={slug}>
+  <Section>
+    <p class="text-sm font-semibold text-verde">{uiT(`estado.${entry.data.estado}`, lang)}</p>
+    <h1 class="mt-2 font-display text-4xl font-bold md:text-5xl">{entry.data.nombre}</h1>
+    <p class="mt-3 text-lg text-gris">{entry.data.tagline[lang]}</p>
+    <p class="mt-2 text-sm text-tinta/80">{entry.data.rol[lang]}</p>
+
+    {
+      portada && (
+        <img
+          src={portada.src}
+          alt={entry.data.nombre}
+          width={portada.width}
+          height={portada.height}
+          class="mt-10 w-full rounded-[var(--radius-md)] border border-linea"
+        />
+      )
+    }
+
+    {
+      entry.data.cifras && (
+        <ul class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {entry.data.cifras.map((c) => (
+            <li>
+              <FigureStat valor={c.valor} etiqueta={c.etiqueta[lang]} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="mt-12 max-w-prose space-y-4 [&_h2]:mt-8 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold">
+      <Content />
+    </div>
+
+    {
+      entry.data.enlaces?.web && (
+        <p class="mt-10">
+          <a class="font-semibold text-verde underline" href={entry.data.enlaces.web} rel="noopener">
+            {entry.data.enlaces.web}
+          </a>
+        </p>
+      )
+    }
+  </Section>
+</BaseLayout>
