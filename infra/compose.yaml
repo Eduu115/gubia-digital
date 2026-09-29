@@ -1,0 +1,13 @@
+# Fase 0 stub — ampliar en fase 5
+services:
+  gubia-web:
+    build:
+      context: ../web
+    ports:
+      - "8080:80"
+    mem_limit: 64m
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    restart: unless-stopped
