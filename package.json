@@ -8,7 +8,8 @@
     "preview": "pnpm --filter web preview",
     "content:check": "pnpm --filter web content:check",
     "check": "pnpm --filter web check",
-    "test": "pnpm --filter web test"
+    "test": "pnpm -r --if-present test",
+    "dev:api": "pnpm --filter contact-api dev"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

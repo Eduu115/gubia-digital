@@ -11,3 +11,15 @@ services:
       - /var/cache/nginx
       - /var/run
     restart: unless-stopped
+  gubia-contact:
+    build:
+      context: ../contact-api
+    mem_limit: 128m
+    environment:
+      PORT: "8787"
+      DB_PATH: /data/leads.sqlite
+    volumes:
+      - gubia-leads:/data
+    restart: unless-stopped
+volumes:
+  gubia-leads:
