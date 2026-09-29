@@ -1,4 +1,5 @@
 ---
+import { Picture } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import type { Lang } from '../../i18n/routes';
 import { uiT } from '../../i18n/ui';
@@ -18,6 +19,9 @@ const beforeSrc = typeof before === 'string' ? before : before.src;
 const afterSrc = typeof after === 'string' ? after : after.src;
 const beforeW = typeof before === 'string' ? undefined : before.width;
 const beforeH = typeof before === 'string' ? undefined : before.height;
+const widths = [480, 960, 1440, 2160];
+const sizes = '(min-width: 768px) 50vw, 100vw';
+const frame = 'absolute inset-0 h-full w-full object-cover object-top';
 ---
 
 <figure class="gubia-compare-figure">
@@ -27,30 +31,59 @@ const beforeH = typeof before === 'string' ? undefined : before.height;
     data-label-after={uiT('compare.after', lang)}
   >
     <div class="compare-stack relative aspect-[16/9] w-full">
-      <img
-        src={beforeSrc}
-        alt={altBefore}
-        width={beforeW}
-        height={beforeH}
-        class="absolute inset-0 h-full w-full object-cover object-top"
-        loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
-      />
-      <div
-        data-compare-after
-        class="absolute inset-0"
-        style="clip-path: inset(0 0 0 50%)"
-      >
-        <img
-          src={afterSrc}
-          alt={altAfter}
-          width={beforeW}
-          height={beforeH}
-          class="absolute inset-0 h-full w-full object-cover object-top"
-          loading={eager ? 'eager' : 'lazy'}
-          fetchpriority={eager ? 'high' : undefined}
-          decoding="async"
-        />
+      {
+        typeof before === 'string' ? (
+          <img
+            src={beforeSrc}
+            alt={altBefore}
+            width={beforeW}
+            height={beforeH}
+            class={frame}
+            loading={eager ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ) : (
+          <Picture
+            src={before}
+            alt={altBefore}
+            widths={widths}
+            sizes={sizes}
+            formats={['avif', 'webp']}
+            class={frame}
+            pictureAttributes={{ class: 'absolute inset-0 block h-full w-full' }}
+            loading={eager ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        )
+      }
+      <div data-compare-after class="absolute inset-0" style="clip-path: inset(0 0 0 50%)">
+        {
+          typeof after === 'string' ? (
+            <img
+              src={afterSrc}
+              alt={altAfter}
+              width={beforeW}
+              height={beforeH}
+              class={frame}
+              loading={eager ? 'eager' : 'lazy'}
+              fetchpriority={eager ? 'high' : undefined}
+              decoding="async"
+            />
+          ) : (
+            <Picture
+              src={after}
+              alt={altAfter}
+              widths={widths}
+              sizes={sizes}
+              formats={['avif', 'webp']}
+              class={frame}
+              pictureAttributes={{ class: 'absolute inset-0 block h-full w-full' }}
+              loading={eager ? 'eager' : 'lazy'}
+              fetchpriority={eager ? 'high' : undefined}
+              decoding="async"
+            />
+          )
+        }
       </div>
 
       <span
@@ -122,6 +155,8 @@ const beforeH = typeof before === 'string' ? undefined : before.height;
     gap: 0.5rem;
   }
   gubia-compare:not(.is-enhanced) .compare-stack > img,
+  gubia-compare:not(.is-enhanced) .compare-stack > picture,
+  gubia-compare:not(.is-enhanced) [data-compare-after] picture,
   gubia-compare:not(.is-enhanced) [data-compare-after] img {
     position: static !important;
     height: auto;
