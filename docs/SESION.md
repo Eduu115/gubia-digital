@@ -41,6 +41,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - ~14:10 — Informe PDF de Ana Mari **fuera de la web**. Sigue en el kit. La ficha ya no lo enlaza.
 - ~14:13 — `contact-api` (Hono + SQLite): validación, honeypot, timing, Turnstile si hay secreto, rate limit, aviso ntfy/SMTP si hay config, reintento y purga. 9 tests. El formulario de `/contacto/` llega a `/gracias/` con la API en `:8787`.
 - ~15:00 — SEO: `robots.txt`, JSON-LD (servicio, FAQ, migas, CreativeWork), OG 1200×630 del caso Ana Mari, `noindex` en gracias y 404. `width`/`height` en las tarjetas.
+- ~15:52 — nginx: cabeceras (CSP, HSTS, nosniff, referrer), gzip y 404 en inglés en `/en/404/`.
 
 ## Decisiones
 
@@ -59,6 +60,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - Formulario: en dev, Vite hace proxy de `/api` a `contact-api` en `:8787`. Sin JS la API responde 303 a `/gracias/`. Si la API no responde, el formulario enseña el email placeholder.
 - Informe PDF de Ana Mari: **no publicar** de momento. Original en `kits/gubia-digital-kit/proyectos/confecciones-ana-mari/Informe-Rediseno-Confecciones-Ana-Mari.pdf`. Comentario en `caso.yaml`. Retomar más adelante (qué se enseña y a quién).
 - Imagen OG: se genera en `prebuild` con sharp (portada + barra tinta/naranja). Tipografía del rótulo: Helvetica, porque el SVG no embebe Space Grotesk. Salida en `web/public/og/` (gitignored).
+- nginx: `web/nginx.conf` es el que copia la imagen. `infra/nginx.conf` es la misma copia. CSP lleva `'unsafe-inline'` en scripts por el JSON-LD y en estilos por el `clip-path` del comparador.
 - Turnstile, ntfy y SMTP quedan apagados hasta que existan secretos en `contact-api/.env` (plantilla en `.env.example`). Sin secreto de Turnstile la API no lo exige.
 - Astro 7 (Sätteri): no hace falta `@astrojs/markdown-remark`. Los atributos `caso`/`lang` los pone un plugin de Vite (`astro.config.mjs`).
 - `/_kit` se inyecta solo si `command === 'dev'`.
