@@ -1,0 +1,261 @@
+---
+import type { Lang } from '../i18n/routes';
+import { uiT } from '../i18n/ui';
+import { localizedPath, formatNumber } from '../i18n/utils';
+import Section from '../components/ui/Section.astro';
+import Button from '../components/ui/Button.astro';
+import Compare from '../components/case/Compare.astro';
+import CaseCard from '../components/case/CaseCard.astro';
+import ProjectCard from '../components/project/ProjectCard.astro';
+import ContactForm from '../components/form/ContactForm.astro';
+import { servicios } from '../data/servicios';
+import { proceso } from '../data/proceso';
+import { faq } from '../data/faq';
+import {
+  getFeaturedCasos,
+  getPublishedCasos,
+  getPublishedProyectos,
+  casoSlug,
+  proyectoSlug,
+  getCasoTexto,
+  resolveMetric,
+} from '../lib/content';
+import { resolveContentImage } from '../lib/images';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const featured = await getFeaturedCasos();
+const allCasos = await getPublishedCasos();
+const proyectos = await getPublishedProyectos();
+const heroCase = featured[0] ?? allCasos[0];
+
+const garantias = ['precio', 'tuya', 'carga', 'permanencia'] as const;
+
+let heroCompare: {
+  before: import('astro').ImageMetadata;
+  after: import('astro').ImageMetadata;
+  altBefore: string;
+  altAfter: string;
+} | null = null;
+
+if (heroCase) {
+  const slug = casoSlug(heroCase);
+  const comp = heroCase.data.comparativas?.find((c) => c.dispositivo === 'desktop') ?? heroCase.data.comparativas?.[0];
+  if (comp) {
+    const before = resolveContentImage('casos', slug, comp.antes);
+    const after = resolveContentImage('casos', slug, comp.despues);
+    if (before && after) {
+      heroCompare = {
+        before,
+        after,
+        altBefore: comp.alt.antes[lang],
+        altAfter: comp.alt.despues[lang],
+      };
+    }
+  }
+}
+
+const caseCards = [];
+for (const c of allCasos.slice(0, 3)) {
+  const slug = casoSlug(c);
+  const texto = await getCasoTexto(slug, lang);
+  const portada = resolveContentImage('casos', slug, c.data.portada);
+  const m = c.data.metricas?.[0];
+  let metricBefore: string | undefined;
+  let metricAfter: string | undefined;
+  let metricLabel: string | undefined;
+  if (m) {
+    const meta = resolveMetric(m, lang);
+    metricBefore = `${formatNumber(m.antes, lang)}${meta.unidad}`;
+    metricAfter = `${formatNumber(m.despues, lang)}${meta.unidad}`;
+    metricLabel = meta.label;
+  }
+  caseCards.push({
+    slug,
+    cliente: c.data.anonimo ? c.data.clienteAnonimo?.[lang] ?? c.data.cliente : c.data.cliente,
+    sectorKey: c.data.sector,
+    resumen: texto?.data.resumen ?? '',
+    portadaSrc: portada?.src ?? '',
+    portadaAlt: texto?.data.titulo ?? c.data.cliente,
+    metricBefore,
+    metricAfter,
+    metricLabel,
+  });
+}
+---
+
+{/* Hero */}
+<section class="border-b border-linea bg-crema">
+  <div
+    class="mx-auto grid min-h-[min(100dvh,52rem)] max-w-[var(--container-max)] items-center gap-10 px-4 pb-16 pt-10 md:grid-cols-2 md:px-6 md:pt-16"
+  >
+    <div>
+      <h1 class="font-display text-4xl font-bold tracking-tight text-tinta text-balance md:text-5xl lg:text-[3.25rem]">
+        <span class="gubia-underline">{uiT('hero.title', lang)}</span>
+      </h1>
+      <p class="mt-5 max-w-[36ch] text-lg text-tinta/80">{uiT('hero.sub', lang)}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <Button href={localizedPath('contacto', lang)} variant="primary">
+          {uiT('hero.cta.primary', lang)}
+        </Button>
+        <Button href={localizedPath('casos', lang)} variant="ghost">
+          {uiT('hero.cta.secondary', lang)}
+        </Button>
+      </div>
+    </div>
+    <div>
+      {
+        heroCompare ? (
+          <Compare
+            lang={lang}
+            before={heroCompare.before}
+            after={heroCompare.after}
+            altBefore={heroCompare.altBefore}
+            altAfter={heroCompare.altAfter}
+            eager
+          />
+        ) : (
+          <div class="flex aspect-[16/9] items-center justify-center rounded-[var(--radius-md)] border border-linea bg-verde p-8 text-crema">
+            <div class="text-center">
+              <img
+                src="/brand/lockup-horizontal-a-blanco.svg"
+                alt=""
+                class="mx-auto h-12 w-auto"
+                width="200"
+                height="44"
+              />
+              <p class="mt-6 font-display text-xl font-bold">{uiT('hero.fallback', lang)}</p>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+{/* Garantías */}
+<section class="border-b border-linea bg-blanco">
+  <ul class="mx-auto grid max-w-[var(--container-max)] gap-6 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4 md:px-6">
+    {
+      garantias.map((g) => (
+        <li class="text-sm font-semibold text-tinta">
+          <span class="mb-2 block h-1 w-8 rounded-full bg-naranja" aria-hidden="true" />
+          {uiT(`garantias.${g}`, lang)}
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+{/* Casos */}
+<Section tone="papel" id="casos">
+  <h2 class="font-display text-3xl font-bold md:text-4xl">{uiT('casos.title', lang)}</h2>
+  {
+    caseCards.length === 0 ? (
+      <p class="mt-6 max-w-prose text-gris">{uiT('casos.empty', lang)}</p>
+    ) : (
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {caseCards.map((c) => (
+          <CaseCard lang={lang} {...c} />
+        ))}
+        <a
+          href={localizedPath('contacto', lang)}
+          class="flex min-h-[16rem] flex-col justify-end rounded-[var(--radius-md)] border border-dashed border-verde/40 bg-verde/5 p-6 transition-colors hover:bg-verde/10"
+        >
+          <p class="font-display text-2xl font-bold text-verde">{uiT('casos.cta', lang)}</p>
+        </a>
+      </div>
+    )
+  }
+</Section>
+
+{/* Servicios */}
+<Section tone="tinta" id="servicios">
+  <h2 class="font-display text-3xl font-bold text-crema md:text-4xl">{uiT('servicios.title', lang)}</h2>
+  <div class="mt-10 grid gap-8 md:grid-cols-3">
+    {
+      servicios.map((s) => (
+        <article class="border-t border-crema/20 pt-5">
+          <h3 class="font-display text-xl font-bold text-crema">{s.nombre[lang]}</h3>
+          <p class="mt-3 text-sm leading-relaxed text-crema/80">{s.descripcion[lang]}</p>
+        </article>
+      ))
+    }
+  </div>
+</Section>
+
+{/* Proceso */}
+<Section tone="papel" id="proceso">
+  <h2 class="font-display text-3xl font-bold md:text-4xl">{uiT('proceso.title', lang)}</h2>
+  <ol class="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+    {
+      proceso.map((step, i) => (
+        <li>
+          <p class="font-display text-4xl font-bold text-naranja/80" aria-hidden="true">
+            {String(i + 1).padStart(2, '0')}
+          </p>
+          <h3 class="mt-2 font-display text-xl font-bold">{step.titulo[lang]}</h3>
+          <p class="mt-2 text-sm text-gris">{step.texto[lang]}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Section>
+
+{/* Proyectos propios */}
+{
+  proyectos.length > 0 && (
+    <Section tone="verde" id="proyectos">
+      <h2 class="font-display text-3xl font-bold text-crema md:text-4xl">{uiT('proyectos.title', lang)}</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {proyectos.map((p) => {
+          const slug = proyectoSlug(p);
+          const portada = resolveContentImage('proyectos', slug, p.data.portada);
+          return (
+            <ProjectCard
+              lang={lang}
+              slug={slug}
+              nombre={p.data.nombre}
+              tagline={p.data.tagline[lang]}
+              estado={p.data.estado}
+              portadaSrc={portada?.src ?? ''}
+            />
+          );
+        })}
+      </div>
+    </Section>
+  )
+}
+
+{/* FAQ */}
+<Section tone="papel" id="faq">
+  <h2 class="font-display text-3xl font-bold md:text-4xl">{uiT('faq.title', lang)}</h2>
+  <div class="mx-auto mt-8 max-w-3xl divide-y divide-linea border-y border-linea">
+    {
+      faq.map((item) => (
+        <details class="group py-4">
+          <summary class="cursor-pointer list-none font-display text-lg font-bold text-tinta marker:content-none [&::-webkit-details-marker]:hidden">
+            <span class="flex items-center justify-between gap-4">
+              {item.q[lang]}
+              <span class="text-naranja transition group-open:rotate-45" aria-hidden="true">+</span>
+            </span>
+          </summary>
+          <p class="mt-3 max-w-prose text-sm text-gris">{item.a[lang]}</p>
+        </details>
+      ))
+    }
+  </div>
+</Section>
+
+{/* CTA + form */}
+<Section tone="tinta" id="contacto">
+  <h2 class="font-display text-3xl font-bold text-crema md:text-4xl">{uiT('cta.title', lang)}</h2>
+  <p class="mt-3 max-w-prose text-crema/80">{uiT('cta.sub', lang)}</p>
+  <div class="mt-10 rounded-[var(--radius-lg)] bg-crema p-6 text-tinta md:p-10">
+    <ContactForm lang={lang} />
+  </div>
+</Section>

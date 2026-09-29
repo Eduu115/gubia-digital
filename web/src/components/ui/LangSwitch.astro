@@ -1,0 +1,44 @@
+---
+import type { Lang, RouteKey } from '../../i18n/routes';
+import { localizedPath, alternateLang } from '../../i18n/utils';
+import { uiT } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  routeKey: RouteKey;
+  slug?: string;
+  alternateHref?: string;
+}
+
+const { lang, routeKey, slug, alternateHref } = Astro.props;
+const other = alternateLang(lang);
+const href =
+  alternateHref ??
+  (slug ? localizedPath(routeKey, other, { slug }) : localizedPath(routeKey, other));
+---
+
+<div class="flex items-center gap-1 text-sm font-semibold" role="group" aria-label={uiT('lang.label', lang)}>
+  <a
+    href={lang === 'es' ? Astro.url.pathname : href}
+    class:list={[
+      'rounded px-1.5 py-0.5',
+      lang === 'es' ? 'bg-tinta text-crema' : 'text-gris hover:text-tinta',
+    ]}
+    aria-current={lang === 'es' ? 'true' : undefined}
+    hreflang="es"
+  >
+    {uiT('lang.es', lang)}
+  </a>
+  <span class="text-linea" aria-hidden="true">/</span>
+  <a
+    href={lang === 'en' ? Astro.url.pathname : href}
+    class:list={[
+      'rounded px-1.5 py-0.5',
+      lang === 'en' ? 'bg-tinta text-crema' : 'text-gris hover:text-tinta',
+    ]}
+    aria-current={lang === 'en' ? 'true' : undefined}
+    hreflang="en"
+  >
+    {uiT('lang.en', lang)}
+  </a>
+</div>

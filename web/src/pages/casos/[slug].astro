@@ -1,0 +1,12 @@
+---
+import CaseView from '../../views/CaseView.astro';
+import { getCasePaths, casoSlug } from '../../lib/content';
+
+export async function getStaticPaths() {
+  const casos = await getCasePaths();
+  return casos.map((c) => ({ params: { slug: casoSlug(c) } }));
+}
+
+const { slug } = Astro.params;
+---
+<CaseView lang="es" slug={slug!} />

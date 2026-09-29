@@ -1,0 +1,89 @@
+---
+import type { Lang, RouteKey } from '../../i18n/routes';
+import { localizedPath } from '../../i18n/utils';
+import { uiT } from '../../i18n/ui';
+import LangSwitch from './LangSwitch.astro';
+
+interface Props {
+  lang: Lang;
+  routeKey: RouteKey;
+  slug?: string;
+  alternateHref?: string;
+}
+
+const { lang, routeKey, slug, alternateHref } = Astro.props;
+
+const links = [
+  { key: 'casos' as const, label: uiT('nav.casos', lang) },
+  { key: 'proyectos' as const, label: uiT('nav.proyectos', lang) },
+  { key: 'nosotros' as const, label: uiT('nav.nosotros', lang) },
+  { key: 'contacto' as const, label: uiT('nav.contacto', lang) },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-linea/80 bg-crema/95 backdrop-blur-sm">
+  <div class="mx-auto flex h-16 max-w-[var(--container-max)] items-center justify-between gap-4 px-4 md:px-6">
+    <a href={localizedPath('home', lang)} class="shrink-0" aria-label="Gubia Digital">
+      <img
+        src="/brand/lockup-horizontal-a-color.svg"
+        alt="gubia digital"
+        width="168"
+        height="36"
+        class="h-8 w-auto"
+      />
+    </a>
+
+    <nav class="hidden items-center gap-6 lg:flex" aria-label="Principal">
+      {
+        links.map((l) => (
+          <a
+            href={localizedPath(l.key, lang)}
+            class="text-sm font-semibold text-tinta/80 transition-colors hover:text-tinta"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <LangSwitch lang={lang} routeKey={routeKey} slug={slug} alternateHref={alternateHref} />
+      <a
+        href={localizedPath('contacto', lang)}
+        class="hidden rounded-[var(--radius-md)] bg-naranja px-3.5 py-2 text-sm font-semibold text-tinta transition-transform active:scale-[0.98] sm:inline-flex"
+      >
+        {uiT('nav.cta', lang)}
+      </a>
+
+      <details class="relative lg:hidden">
+        <summary
+          class="list-none cursor-pointer rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2 text-sm font-semibold text-tinta"
+        >
+          {uiT('nav.menu', lang)}
+        </summary>
+        <div
+          class="absolute right-0 mt-2 w-56 rounded-[var(--radius-md)] border border-linea bg-blanco p-3 shadow-[var(--shadow-soft)]"
+        >
+          <nav class="flex flex-col gap-2" aria-label="Móvil">
+            {
+              links.map((l) => (
+                <a
+                  href={localizedPath(l.key, lang)}
+                  class="rounded-[var(--radius-sm)] px-2 py-2 text-sm font-semibold text-tinta hover:bg-crema"
+                >
+                  {l.label}
+                </a>
+              ))
+            }
+            <a
+              href={localizedPath('contacto', lang)}
+              class="mt-1 rounded-[var(--radius-md)] bg-naranja px-3 py-2 text-center text-sm font-semibold text-tinta"
+            >
+              {uiT('nav.cta', lang)}
+            </a>
+          </nav>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>

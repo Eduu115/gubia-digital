@@ -1,0 +1,149 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { Lang } from '../../i18n/routes';
+import { uiT } from '../../i18n/ui';
+import Compare from './Compare.astro';
+
+interface Pair {
+  id: string;
+  dispositivo: 'desktop' | 'movil';
+  before: ImageMetadata;
+  after: ImageMetadata;
+  altBefore: string;
+  altAfter: string;
+  caption?: string;
+}
+
+interface Props {
+  lang: Lang;
+  pairs: Pair[];
+  eager?: boolean;
+}
+
+const { lang, pairs, eager = false } = Astro.props;
+
+const groups: { id: string; pairs: Pair[] }[] = [];
+for (const pair of pairs) {
+  const group = groups.find((item) => item.id === pair.id);
+  if (group) group.pairs.push(pair);
+  else groups.push({ id: pair.id, pairs: [pair] });
+}
+
+const deviceLabel = (device: Pair['dispositivo']) =>
+  device === 'movil' ? uiT('compare.mobile', lang) : uiT('compare.desktop', lang);
+---
+
+<div class="space-y-10">
+  {
+    groups.map((group, groupIndex) => {
+      const several = group.pairs.length > 1;
+      const preferred = group.pairs.findIndex((pair) => pair.dispositivo === 'desktop');
+      const initial = preferred >= 0 ? preferred : 0;
+      return (
+        <div data-device-tabs={several ? '' : undefined}>
+          {several && (
+            <div role="tablist" aria-label={uiT('compare.label', lang)} class="mb-3 flex gap-2">
+              {group.pairs.map((pair, index) => (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`${group.id}-${pair.dispositivo}-tab`}
+                  aria-controls={`${group.id}-${pair.dispositivo}-panel`}
+                  aria-selected={index === initial ? 'true' : 'false'}
+                  tabindex={index === initial ? 0 : -1}
+                  class:list={[
+                    'rounded-[var(--radius-sm)] px-3 py-1.5 text-sm font-semibold',
+                    index === initial
+                      ? 'bg-tinta text-crema'
+                      : 'border border-linea bg-blanco text-tinta',
+                  ]}
+                >
+                  {deviceLabel(pair.dispositivo)}
+                </button>
+              ))}
+            </div>
+          )}
+          {group.pairs.map((pair, index) => (
+            <div
+              role={several ? 'tabpanel' : undefined}
+              id={several ? `${group.id}-${pair.dispositivo}-panel` : undefined}
+              aria-labelledby={several ? `${group.id}-${pair.dispositivo}-tab` : undefined}
+              data-active={several && index === initial ? '' : undefined}
+            >
+              {several && (
+                <h3 class="mb-2 font-display text-lg font-bold">{deviceLabel(pair.dispositivo)}</h3>
+              )}
+              <Compare
+                lang={lang}
+                before={pair.before}
+                after={pair.after}
+                altBefore={pair.altBefore}
+                altAfter={pair.altAfter}
+                caption={pair.caption}
+                eager={eager && groupIndex === 0 && index === initial}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  [data-device-tabs]:not(.is-enhanced) [role='tablist'] {
+    display: none;
+  }
+  [data-device-tabs].is-enhanced [role='tabpanel']:not([data-active]) {
+    display: none;
+  }
+  [data-device-tabs].is-enhanced h3 {
+    display: none;
+  }
+</style>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>('[data-device-tabs]')) {
+    if (root.dataset.tabsReady === '1') continue;
+    root.dataset.tabsReady = '1';
+    root.classList.add('is-enhanced');
+    const tabs = [...root.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const panels = [...root.querySelectorAll<HTMLElement>('[role="tabpanel"]')];
+    const select = (tab: HTMLButtonElement) => {
+      for (const item of tabs) {
+        const on = item === tab;
+        item.setAttribute('aria-selected', on ? 'true' : 'false');
+        item.tabIndex = on ? 0 : -1;
+        item.className = on
+          ? 'rounded-[var(--radius-sm)] px-3 py-1.5 text-sm font-semibold bg-tinta text-crema'
+          : 'rounded-[var(--radius-sm)] px-3 py-1.5 text-sm font-semibold border border-linea bg-blanco text-tinta';
+      }
+      const panelId = tab.getAttribute('aria-controls');
+      for (const panel of panels) {
+        if (panel.id === panelId) panel.setAttribute('data-active', '');
+        else panel.removeAttribute('data-active');
+      }
+    };
+    const initial = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') ?? tabs[0];
+    if (initial) select(initial);
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') {
+          return;
+        }
+        event.preventDefault();
+        const next =
+          event.key === 'ArrowRight'
+            ? (index + 1) % tabs.length
+            : event.key === 'ArrowLeft'
+              ? (index - 1 + tabs.length) % tabs.length
+              : event.key === 'Home'
+                ? 0
+                : tabs.length - 1;
+        tabs[next]?.focus();
+        if (tabs[next]) select(tabs[next]);
+      });
+    });
+  }
+</script>
