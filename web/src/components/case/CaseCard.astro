@@ -11,6 +11,8 @@ interface Props {
   resumen: string;
   portadaSrc: string;
   portadaAlt: string;
+  portadaWidth?: number;
+  portadaHeight?: number;
   metricLabel?: string;
   metricBefore?: string;
   metricAfter?: string;
@@ -24,6 +26,8 @@ const {
   resumen,
   portadaSrc,
   portadaAlt,
+  portadaWidth,
+  portadaHeight,
   metricLabel,
   metricBefore,
   metricAfter,
@@ -38,6 +42,8 @@ const {
     <img
       src={portadaSrc}
       alt={portadaAlt}
+      width={portadaWidth}
+      height={portadaHeight}
       class="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02]"
       loading="lazy"
       decoding="async"

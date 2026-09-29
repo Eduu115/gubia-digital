@@ -28,6 +28,8 @@ const proyectos = await getPublishedProyectos();
               tagline={p.data.tagline[lang]}
               estado={p.data.estado}
               portadaSrc={portada?.src ?? ''}
+              portadaWidth={portada?.width}
+              portadaHeight={portada?.height}
             />
           );
         })

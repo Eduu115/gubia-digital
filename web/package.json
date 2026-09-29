@@ -12,7 +12,8 @@
     "astro": "astro",
     "check": "astro check",
     "content:check": "tsx scripts/content-check.ts",
-    "prebuild": "tsx scripts/content-check.ts",
+    "og": "tsx scripts/og.ts",
+    "prebuild": "tsx scripts/content-check.ts && tsx scripts/og.ts",
     "test": "vitest run"
   },
   "dependencies": {

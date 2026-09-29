@@ -3,7 +3,7 @@
 | Campo | Valor |
 |-------|-------|
 | Fecha | 2026-09-29 |
-| Fase actual | **Fase 3 en local:** formulario conectado a `contact-api`. Turnstile/ntfy/SMTP sin secretos. Informe PDF de Ana Mari apartado. |
+| Fase actual | **Fase 4 en curso:** SEO (JSON-LD, robots, OG por caso). Lighthouse CI aún no. |
 | Estado | **listo para retomar** |
 | Marca | **kit gana al §9.2 del plan** (verde #1B4D3E, naranja #FF6A13, tinta #1C2B4A, crema #F6F1E7; Space Grotesk + Inter) |
 | Design read | Landing B2B local pymes: tallado, contraste fuerte; tokens kit. Dials: VARIANCE 6 / MOTION 3 / DENSITY 4 |
@@ -20,6 +20,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 | `feat/sitio-web` | Astro: páginas, i18n, componentes, contenido `_demo`, tests |
 | `feat/caso-ana-mari` | Caso publicado Confecciones Ana Mari (sin el PDF) |
 | `feat/contact-api` | API de contacto, proxy `/api` y servicio en compose |
+| `feat/seo` | JSON-LD, robots.txt e imagen OG por caso |
 
 ## Hecho
 
@@ -39,6 +40,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - ~13:55 — Caso publicado `confecciones-ana-mari` (mercería y arreglos en Getafe, no panadería). Textos del informe del kit. Sin métricas ni testimonio inventados. `_demo` (panadería ficticia) sale del índice y de la home; sus capturas ya no son las de Ana Mari.
 - ~14:10 — Informe PDF de Ana Mari **fuera de la web**. Sigue en el kit. La ficha ya no lo enlaza.
 - ~14:13 — `contact-api` (Hono + SQLite): validación, honeypot, timing, Turnstile si hay secreto, rate limit, aviso ntfy/SMTP si hay config, reintento y purga. 9 tests. El formulario de `/contacto/` llega a `/gracias/` con la API en `:8787`.
+- ~15:00 — SEO: `robots.txt`, JSON-LD (servicio, FAQ, migas, CreativeWork), OG 1200×630 del caso Ana Mari, `noindex` en gracias y 404. `width`/`height` en las tarjetas.
 
 ## Decisiones
 
@@ -47,7 +49,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - Inter + Space Grotesk: kit (override taste).
 - CTA: **tinta sobre naranja** (blanco del kit falla AA).
 - Motion: CSS only + nudge Compare; sin GSAP/Motion libs.
-- Sin commit/push.
+- Ramas y PRs apiladas: ver la tabla de arriba. `main` no se toca hasta el merge.
 - Caso Ana Mari: **publicado** por instrucción del titular (2026-09-29). Es mercería y confecciones en Getafe, web en vivo `https://confemerana.es/`. El HTML canónico cita `confeccionesanamari.es`, que hoy no resuelve.
 - Fecha de entrega en ficha: `2026-09`, por el `Last-Modified` de la web (25 sep 2026). El informe trae `[00/00/2026]`.
 - Sin métricas de laboratorio, sin testimonio y sin logo: el informe no los trae.
@@ -56,6 +58,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - `_demo` no entra en índices ni en la home. Sigue en `/_kit` y, en dev, en `/casos/_demo/`.
 - Formulario: en dev, Vite hace proxy de `/api` a `contact-api` en `:8787`. Sin JS la API responde 303 a `/gracias/`. Si la API no responde, el formulario enseña el email placeholder.
 - Informe PDF de Ana Mari: **no publicar** de momento. Original en `kits/gubia-digital-kit/proyectos/confecciones-ana-mari/Informe-Rediseno-Confecciones-Ana-Mari.pdf`. Comentario en `caso.yaml`. Retomar más adelante (qué se enseña y a quién).
+- Imagen OG: se genera en `prebuild` con sharp (portada + barra tinta/naranja). Tipografía del rótulo: Helvetica, porque el SVG no embebe Space Grotesk. Salida en `web/public/og/` (gitignored).
 - Turnstile, ntfy y SMTP quedan apagados hasta que existan secretos en `contact-api/.env` (plantilla en `.env.example`). Sin secreto de Turnstile la API no lo exige.
 - Astro 7 (Sätteri): no hace falta `@astrojs/markdown-remark`. Los atributos `caso`/`lang` los pone un plugin de Vite (`astro.config.mjs`).
 - `/_kit` se inyecta solo si `command === 'dev'`.
@@ -63,9 +66,9 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 
 ## Siguiente paso
 
-1. **No rehacer** el caso Ana Mari ni volver a publicar el PDF del informe.
-2. Cuando haya secretos: `TURNSTILE_SECRET`, ntfy y SMTP en `contact-api/.env`. El widget de Turnstile en el formulario aún no está (hace falta la site key).
-3. Fase 4: SEO/OG/Lighthouse. Pendiente de guidelines: `width`/`height` en `CaseCard` y `ProjectCard`.
+1. **No rehacer** el caso Ana Mari, el PDF ni el SEO básico.
+2. Cuando haya secretos: `TURNSTILE_SECRET`, ntfy y SMTP. Falta el widget de Turnstile (site key).
+3. Fase 4 restante: Lighthouse CI, e2e y enlaces. Presupuestos cuando el CI exista.
 4. Falta confirmar con Edu: fecha exacta de entrega, logo, testimonio, dominio canónico `confeccionesanamari.es`, y más adelante qué hacer con el PDF.
 
 ## Cómo verificar
