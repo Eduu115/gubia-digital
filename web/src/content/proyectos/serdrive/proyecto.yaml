@@ -1,0 +1,18 @@
+nombre: "serdrive"
+publicar: true
+destacado: false
+orden: 3
+estado: desarrollo
+tipo: producto
+tagline:
+  es: "Archivos en un servidor montado en casa"
+  en: "Files on a server built at home"
+rol:
+  es: "Montaje del servidor y la landing"
+  en: "Server build and landing page"
+# Mes en que se creó el repo de la landing.
+fechaInicio: "2025-12"
+stack: [HTML, CSS, JavaScript]
+enlaces:
+  repo: "https://github.com/Eduu115/serdrive-landing"
+portada: ./img/portada.webp

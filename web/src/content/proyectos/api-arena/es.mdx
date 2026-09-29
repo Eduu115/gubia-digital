@@ -1,0 +1,17 @@
+---
+titulo: "Retos reales para diseñar APIs REST"
+resumen: "Envías tu API, un sandbox la prueba por HTTP y el resultado queda en el ranking."
+descripcionSeo: "API Arena: retos de APIs REST con pruebas HTTP, ranking y replay. Proyecto de Eduardo Serrano."
+---
+
+## Qué es
+
+API Arena sirve para practicar diseño de APIs REST. Eliges un reto, implementas la API, la envías en un ZIP y un sandbox la construye y la prueba con peticiones HTTP de verdad. El sitio público está en acceso anticipado.
+
+## Cómo está hecha
+
+El núcleo funciona de punta a punta en Docker. Hay nueve servicios activos: cuentas, retos, envíos, sandbox, pruebas, ranking, revisión, métricas y avisos. Los datos viven en PostgreSQL y Redis. Kafka mueve el pipeline. El frontal es React.
+
+## Qué deja cada envío
+
+No es una lista de ejercicios. Cada envío deja un replay: qué se construyó, qué falló y cómo queda en el ranking.

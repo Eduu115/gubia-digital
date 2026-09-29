@@ -1,0 +1,13 @@
+---
+titulo: "Gastos y ahorros en tu servidor"
+resumen: "Anotas movimientos, ves el gasto y el ahorro, e importas el CSV del banco. Los datos se quedan en tu máquina."
+descripcionSeo: "saveToWin: gastos y ahorros en tu servidor, con PostgreSQL y el dinero guardado en céntimos."
+---
+
+## Qué hace
+
+saveToWin sirve para anotar gastos e ingresos, clasificarlos y ver un panel: gasto por categoría, tasa de ahorro y presupuesto frente a lo real. Se puede importar un CSV del banco. Cada cuenta solo ve sus datos.
+
+## Cómo está hecha
+
+Corre en un servidor propio con Docker: una aplicación Node (Hono y React) y PostgreSQL. El dinero se guarda en céntimos, no en decimales, para no perder precisión. El acceso va con registro, contraseña hasheada y una cookie httpOnly.

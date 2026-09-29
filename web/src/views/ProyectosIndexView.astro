@@ -9,6 +9,7 @@ import { resolveContentImage } from '../lib/images';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
+const es = lang === 'es';
 const proyectos = await getPublishedProyectos();
 ---
 
@@ -37,7 +38,7 @@ const proyectos = await getPublishedProyectos();
     </div>
     {
       proyectos.length === 0 && (
-        <p class="mt-6 text-gris">TODO(edu): publicar proyectos propios (API Arena, …).</p>
+        <p class="mt-6 text-gris">{es ? 'Pronto saldrán aquí los proyectos propios.' : 'Our own projects will show up here.'}</p>
       )
     }
   </Section>

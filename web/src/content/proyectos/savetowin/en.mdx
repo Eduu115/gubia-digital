@@ -1,0 +1,13 @@
+---
+titulo: "Spending and savings on your server"
+resumen: "You log transactions, see spending and savings, and import a bank CSV. The data stays on your machine."
+descripcionSeo: "saveToWin: spending and savings on your server, with PostgreSQL and money stored in cents."
+---
+
+## What it does
+
+saveToWin is for logging expenses and income, sorting them, and seeing a dashboard: spending by category, savings rate, and budget against what actually happened. A bank CSV can be imported. Each account only sees its own data.
+
+## How it is built
+
+It runs on your own server with Docker: a Node app (Hono and React) and PostgreSQL. Money is stored in cents, not decimals, so the figures do not drift. Sign-in uses a hashed password and an httpOnly cookie.

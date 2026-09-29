@@ -3,7 +3,7 @@
 | Campo | Valor |
 |-------|-------|
 | Fecha | 2026-09-29 |
-| Fase actual | **Fase 4:** SEO hecho. CI con tests, build, enlaces y e2e. Lighthouse CI aún no. |
+| Fase actual | **Identidad pública rellenada.** Foto, logo de Ana Mari, NIF y domicilio siguen pendientes. El homelab no se ha tocado. |
 | Estado | **listo para retomar** |
 | Marca | **kit gana al §9.2 del plan** (verde #1B4D3E, naranja #FF6A13, tinta #1C2B4A, crema #F6F1E7; Space Grotesk + Inter) |
 | Design read | Landing B2B local pymes: tallado, contraste fuerte; tokens kit. Dials: VARIANCE 6 / MOTION 3 / DENSITY 4 |
@@ -43,6 +43,7 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - ~14:13 — `contact-api` (Hono + SQLite): validación, honeypot, timing, Turnstile si hay secreto, rate limit, aviso ntfy/SMTP si hay config, reintento y purga. 9 tests. El formulario de `/contacto/` llega a `/gracias/` con la API en `:8787`.
 - ~15:00 — SEO: `robots.txt`, JSON-LD (servicio, FAQ, migas, CreativeWork), OG 1200×630 del caso Ana Mari, `noindex` en gracias y 404. `width`/`height` en las tarjetas.
 - ~15:13 — CI: `.github/workflows/ci.yml` corre content:check, vitest, build, enlaces internos y 4 e2e (idioma, teclado del comparador, `?ref=footer`, formulario sin JS). Lighthouse no entra todavía.
+- ~18:05 — Identidad: Eduardo Serrano, `hola@gubiadigital.com`, teléfono y WhatsApp `+34 711 510 387`, LinkedIn y GitHub. Aviso legal, privacidad y cookies escritos sin NIF ni domicilio. Proyectos: API Arena, saveToWin y serdrive (en desarrollo, sin enlace al dominio). Foto y logo de Ana Mari, pendientes.
 
 ## Decisiones
 
@@ -58,7 +59,10 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 - Stack de la web nueva: no consta en el informe. No se afirma.
 - La portada del caso muestra la comparativa `home`. Catálogo, arreglos, nosotros y contacto van en la narrativa.
 - `_demo` no entra en índices ni en la home. Sigue en `/_kit` y, en dev, en `/casos/_demo/`.
-- Formulario: en dev, Vite hace proxy de `/api` a `contact-api` en `:8787`. Sin JS la API responde 303 a `/gracias/`. Si la API no responde, el formulario enseña el email placeholder.
+- Formulario: en dev, Vite hace proxy de `/api` a `contact-api` en `:8787`. Sin JS la API responde 303 a `/gracias/`. Si la API no responde, el formulario enseña `hola@gubiadigital.com`.
+- Bio pública: desarrollo para negocios, sin empleador ni cargo. La de LinkedIn se usó solo como materia prima.
+- serdrive.com hoy no sirve la landing (el HTTPS no resuelve y el HTTP enseña el proxy por defecto). No se enlaza hasta que la sirva.
+- Fechas de proyecto: mes de creación del repo público, no un lanzamiento comercial.
 - Informe PDF de Ana Mari: **no publicar** de momento. Original en `kits/gubia-digital-kit/proyectos/confecciones-ana-mari/Informe-Rediseno-Confecciones-Ana-Mari.pdf`. Comentario en `caso.yaml`. Retomar más adelante (qué se enseña y a quién).
 - Lighthouse CI queda fuera hasta medir la web. No se fija un presupuesto que aún no hemos comprobado.
 - Imagen OG: se genera en `prebuild` con sharp (portada + barra tinta/naranja). Tipografía del rótulo: Helvetica, porque el SVG no embebe Space Grotesk. Salida en `web/public/og/` (gitignored).
@@ -70,10 +74,12 @@ Trabajo partido en PRs apiladas. Cada una sale de la anterior; se mergean en est
 
 ## Siguiente paso
 
-1. **No rehacer** el caso Ana Mari, el PDF ni el SEO básico.
-2. Cuando haya secretos: `TURNSTILE_SECRET`, ntfy y SMTP. Falta el widget de Turnstile (site key).
-3. Fase 4 restante: Lighthouse, cuando se mida en móvil. No activar el presupuesto de 95 a ciegas.
-4. Falta confirmar con Edu: fecha exacta de entrega, logo, testimonio, dominio canónico `confeccionesanamari.es`, y más adelante qué hacer con el PDF.
+1. **No rehacer** el caso Ana Mari ni publicar el PDF. Fecha `2026-09`, dominio `confemerana.es`, testimonio apagado.
+2. Cuando Edu las pase: foto de perfil y logo de la tienda.
+3. Cuando conste el alta: NIF y domicilio en el aviso legal y en privacidad. El canónico del sitio sigue en `gubiadigital.example` hasta que el dominio resuelva.
+4. Precios «desde»: sin publicar. Plazo de respuesta: sin cifra, solo email o WhatsApp.
+5. Cuando haya secretos: `TURNSTILE_SECRET`, ntfy y SMTP. Falta el widget de Turnstile (site key).
+6. **No ejecutar** el despliegue del homelab hasta que Edu confirme el runbook.
 
 ## Cómo verificar
 

@@ -1,0 +1,19 @@
+nombre: "saveToWin"
+publicar: true
+destacado: true
+orden: 2
+estado: produccion
+tipo: producto
+tagline:
+  es: "Gastos y ahorros en tu propio servidor"
+  en: "Spending and savings on your own server"
+rol:
+  es: "Diseño, desarrollo y despliegue"
+  en: "Design, development and deployment"
+# Mes en que se creó el repo público.
+fechaInicio: "2026-08"
+stack: [Node, Hono, React, TypeScript, PostgreSQL, Docker]
+enlaces:
+  web: "https://savetowin.app"
+  repo: "https://github.com/Eduu115/saveToWin"
+portada: ./img/portada.webp

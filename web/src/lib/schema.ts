@@ -1,3 +1,5 @@
+import { site } from '../data/site';
+
 export interface Crumb {
   name: string;
   url: string;
@@ -7,8 +9,10 @@ export function professionalService(url: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
-    name: 'Gubia Digital',
+    name: site.name,
     url,
+    email: site.email,
+    telephone: site.phoneTel,
     areaServed: ['Madrid', 'España'],
   };
 }

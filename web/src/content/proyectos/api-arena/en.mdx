@@ -1,0 +1,17 @@
+---
+titulo: "Real challenges for REST API design"
+resumen: "You submit an API, a sandbox tests it over HTTP, and the result lands on the board."
+descripcionSeo: "API Arena: REST API challenges with real HTTP tests, ranking and replay. A project by Eduardo Serrano."
+---
+
+## What it is
+
+API Arena is for practising REST API design. You pick a challenge, build the API, send it as a ZIP, and a sandbox builds it and tests it with real HTTP requests. The public site is in early access.
+
+## How it is built
+
+The core runs end to end in Docker. Nine services are active: accounts, challenges, submissions, sandbox, tests, ranking, review, metrics and notifications. Data lives in PostgreSQL and Redis. Kafka moves the pipeline. The front end is React.
+
+## What each submission leaves
+
+It is not a list of exercises. Each submission leaves a replay: what was built, what failed, and where it sits on the board.

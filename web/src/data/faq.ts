@@ -4,15 +4,15 @@ export const faq: { q: Bilingual; a: Bilingual }[] = [
   {
     q: { es: '¿Cuánto cuesta?', en: 'How much does it cost?' },
     a: {
-      es: 'Depende del alcance. Te damos un precio cerrado en la propuesta. TODO(edu): rangos si se publican.',
-      en: 'It depends on scope. You get a fixed price in the proposal. TODO(edu): publish ranges if decided.',
+      es: 'Depende del alcance. Te damos un precio cerrado en la propuesta.',
+      en: 'It depends on scope. You get a fixed price in the proposal.',
     },
   },
   {
     q: { es: '¿Cuánto se tarda?', en: 'How long does it take?' },
     a: {
-      es: 'Un rediseño típico de pyme local suele ir de pocas semanas a un par de meses, según contenido y revisiones. TODO(edu): plazos reales.',
-      en: 'A typical local-business redesign takes a few weeks to a couple of months, depending on content and reviews. TODO(edu): real timelines.',
+      es: 'Una ampliación pequeña va de 1 a 2 semanas. Una ampliación grande o una web completa, de 2 a 4 semanas, o de 3 a 6 si hay más funcionalidades. El plazo cerrado va en la propuesta.',
+      en: 'A small addition takes 1 to 2 weeks. A large addition or a full site takes 2 to 4 weeks, or 3 to 6 if there is more functionality. The fixed schedule is in the proposal.',
     },
   },
   {
