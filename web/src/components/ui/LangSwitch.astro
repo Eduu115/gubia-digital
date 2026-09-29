@@ -15,11 +15,15 @@ const other = alternateLang(lang);
 const href =
   alternateHref ??
   (slug ? localizedPath(routeKey, other, { slug }) : localizedPath(routeKey, other));
+const here =
+  Astro.url.pathname === '/404' || Astro.url.pathname === '/404/'
+    ? localizedPath(routeKey, lang)
+    : Astro.url.pathname;
 ---
 
 <div class="flex items-center gap-1 text-sm font-semibold" role="group" aria-label={uiT('lang.label', lang)}>
   <a
-    href={lang === 'es' ? Astro.url.pathname : href}
+    href={lang === 'es' ? here : href}
     class:list={[
       'rounded px-1.5 py-0.5',
       lang === 'es' ? 'bg-tinta text-crema' : 'text-gris hover:text-tinta',
@@ -31,7 +35,7 @@ const href =
   </a>
   <span class="text-linea" aria-hidden="true">/</span>
   <a
-    href={lang === 'en' ? Astro.url.pathname : href}
+    href={lang === 'en' ? here : href}
     class:list={[
       'rounded px-1.5 py-0.5',
       lang === 'en' ? 'bg-tinta text-crema' : 'text-gris hover:text-tinta',
