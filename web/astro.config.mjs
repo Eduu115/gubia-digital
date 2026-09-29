@@ -63,6 +63,11 @@ export default defineConfig({
   },
   vite: {
     plugins: [injectContentRefs(), tailwindcss()],
+    server: {
+      proxy: {
+        '/api': 'http://127.0.0.1:8787',
+      },
+    },
   },
   image: {
     service: { entrypoint: 'astro/assets/services/sharp' },
