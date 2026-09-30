@@ -21,15 +21,15 @@ const links = [
 ];
 ---
 
-<header class="sticky top-0 z-40 border-b border-linea/80 bg-crema/95 backdrop-blur-sm">
-  <div class="mx-auto flex h-16 max-w-[var(--container-max)] items-center justify-between gap-4 px-4 md:px-6">
+<header class="sticky top-0 z-40 border-b border-verde bg-verde text-crema">
+  <div class="mx-auto flex h-[4.5rem] max-w-[var(--container-max)] items-center justify-between gap-4 px-4 md:px-6">
     <a href={localizedPath('home', lang)} class="shrink-0" aria-label="Gubia Digital">
       <img
-        src="/brand/lockup-horizontal-a-color.svg"
+        src="/brand/lockup-horizontal-a-blanco.svg"
         alt="gubia digital"
-        width="168"
-        height="36"
-        class="h-8 w-auto"
+        width="180"
+        height="40"
+        class="h-9 w-auto"
       />
     </a>
 
@@ -38,7 +38,7 @@ const links = [
         links.map((l) => (
           <a
             href={localizedPath(l.key, lang)}
-            class="text-sm font-semibold text-tinta/80 transition-colors hover:text-tinta"
+            class="text-sm font-semibold text-crema/90 transition-colors hover:text-blanco"
           >
             {l.label}
           </a>
@@ -57,7 +57,7 @@ const links = [
 
       <details class="relative lg:hidden">
         <summary
-          class="list-none cursor-pointer rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2 text-sm font-semibold text-tinta"
+          class="list-none cursor-pointer rounded-[var(--radius-md)] border border-crema/40 px-3 py-2 text-sm font-semibold text-crema"
         >
           {uiT('nav.menu', lang)}
         </summary>
