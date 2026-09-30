@@ -5,8 +5,8 @@ orden: 2
 estado: produccion
 tipo: producto
 tagline:
-  es: "Gastos y ahorros en tu propio servidor"
-  en: "Spending and savings on your own server"
+  es: "Úsala en savetowin.app o clónala y hospédala tú"
+  en: "Use savetowin.app, or clone it and host it yourself"
 rol:
   es: "Diseño, desarrollo y despliegue"
   en: "Design, development and deployment"

@@ -53,11 +53,7 @@ export async function getFeaturedCasos() {
 export async function getPublishedProyectos() {
   const all = await getCollection('proyectos');
   return all
-    .filter((p) => {
-      const slug = slugFromId(p.id);
-      if (slug.startsWith('_')) return import.meta.env.DEV;
-      return p.data.publicar;
-    })
+    .filter((p) => !slugFromId(p.id).startsWith('_') && p.data.publicar)
     .sort((a, b) => a.data.orden - b.data.orden);
 }
 
