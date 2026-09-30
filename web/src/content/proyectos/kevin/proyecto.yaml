@@ -1,0 +1,18 @@
+nombre: "Kevin"
+publicar: true
+destacado: false
+orden: 4
+estado: desarrollo
+tipo: herramienta
+tagline:
+  es: "Agente gestor de servidores self-hosted"
+  en: "An agent that manages self-hosted servers"
+rol:
+  es: "Diseño y operación en el homelab"
+  en: "Design and operations on the homelab"
+# Mes en que se creó el repo público.
+fechaInicio: "2026-09"
+stack: [Python, Docker, PostgreSQL, Redis]
+enlaces:
+  repo: "https://github.com/Eduu115/personalAgent"
+portada: ./img/portada.webp
