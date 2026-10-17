@@ -23,6 +23,7 @@ import {
 import { resolveContentImage } from '../lib/images';
 import JsonLd from '../components/seo/JsonLd.astro';
 import { faqPage, professionalService } from '../lib/schema';
+import { siteMode } from '../data/site';
 
 interface Props {
   lang: Lang;
@@ -113,7 +114,7 @@ for (const c of allCasos.slice(0, 3)) {
         <Button href={localizedPath('contacto', lang)} variant="primary">
           {uiT('hero.cta.primary', lang)}
         </Button>
-        <Button href={localizedPath('casos', lang)} variant="ghost">
+        <Button href={localizedPath(siteMode === 'portfolio' ? 'proyectos' : 'casos', lang)} variant="ghost">
           {uiT('hero.cta.secondary', lang)}
         </Button>
       </div>
@@ -162,7 +163,34 @@ for (const c of allCasos.slice(0, 3)) {
   </ul>
 </section>
 
-{/* Casos */}
+{/* Apps, delante en el portfolio */}
+{
+  siteMode === 'portfolio' && proyectos.length > 0 && (
+    <Section tone="verde" id="proyectos">
+      <h2 class="font-display text-3xl font-bold text-crema md:text-4xl">{uiT('proyectos.title', lang)}</h2>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        {proyectos.map((p) => {
+          const slug = proyectoSlug(p);
+          const portada = resolveContentImage('proyectos', slug, p.data.portada);
+          return (
+            <ProjectCard
+              lang={lang}
+              slug={slug}
+              nombre={p.data.nombre}
+              tagline={p.data.tagline[lang]}
+              estado={p.data.estado}
+              portadaSrc={portada?.src ?? ''}
+              portadaWidth={portada?.width}
+              portadaHeight={portada?.height}
+            />
+          );
+        })}
+      </div>
+    </Section>
+  )
+}
+
+{/* Comercios */}
 <Section tone="papel" id="casos">
   <h2 class="font-display text-3xl font-bold md:text-4xl">{uiT('casos.title', lang)}</h2>
   {
@@ -217,9 +245,9 @@ for (const c of allCasos.slice(0, 3)) {
   </ol>
 </Section>
 
-{/* Proyectos propios */}
+{/* Proyectos, después del relato en modo empresa */}
 {
-  proyectos.length > 0 && (
+  siteMode !== 'portfolio' && proyectos.length > 0 && (
     <Section tone="verde" id="proyectos">
       <h2 class="font-display text-3xl font-bold text-crema md:text-4xl">{uiT('proyectos.title', lang)}</h2>
       <div class="mt-10 grid gap-6 md:grid-cols-2">

@@ -28,18 +28,12 @@ jobs:
   deploy:
     needs: check
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feat/proyectos-propios')
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, homelab]
     concurrency:
       group: gubia-homelab
       cancel-in-progress: false
     steps:
       - name: Desplegar en el homelab
-        env:
-          SSH_KEY: ${{ secrets.GUBIA_SSH_KEY }}
-          SSH_HOST: ${{ secrets.GUBIA_SSH_HOST }}
         run: |
-          mkdir -p ~/.ssh
-          printf '%s\n' "$SSH_KEY" > ~/.ssh/gubia
-          chmod 600 ~/.ssh/gubia
-          ssh -i ~/.ssh/gubia -o StrictHostKeyChecking=accept-new "dudu@${SSH_HOST}" \
-            "cd ~/apps/gubia-digital && GUBIA_DEPLOY_OK=1 GUBIA_BRANCH=${{ github.ref_name }} infra/deploy.sh"
+          cd "$HOME/apps/gubia-digital"
+          GUBIA_DEPLOY_OK=1 GUBIA_BRANCH="${{ github.ref_name }}" infra/deploy.sh

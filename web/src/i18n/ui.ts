@@ -4,8 +4,8 @@ import { siteMode } from '../data/site';
 type Dict = Record<string, Record<Lang, string>>;
 
 const uiBase: Dict = {
-  'nav.casos': { es: 'Casos', en: 'Work' },
-  'nav.proyectos': { es: 'Proyectos', en: 'Projects' },
+  'nav.casos': { es: 'Comercios', en: 'Shops' },
+  'nav.proyectos': { es: 'Apps', en: 'Apps' },
   'nav.nosotros': { es: 'Nosotros', en: 'About' },
   'nav.contacto': { es: 'Contacto', en: 'Contact' },
   'nav.cta': { es: 'Escríbenos', en: 'Write to us' },
@@ -25,7 +25,7 @@ const uiBase: Dict = {
     en: 'Gubia Digital. Web applications and personal projects.',
   },
   'hero.cta.primary': { es: 'Escríbenos', en: 'Write to us' },
-  'hero.cta.secondary': { es: 'Ver casos', en: 'See work' },
+  'hero.cta.secondary': { es: 'Ver apps', en: 'See apps' },
   'hero.fallback': {
     es: 'Oficio digital para negocios de barrio',
     en: 'Digital craft for neighborhood businesses',
@@ -36,17 +36,17 @@ const uiBase: Dict = {
   'garantias.carga': { es: 'Pensada para cargar rápido', en: 'Built to load fast' },
   'garantias.permanencia': { es: 'Proyectos propios en marcha', en: 'Personal projects in progress' },
 
-  'casos.title': { es: 'Casos', en: 'Selected work' },
+  'casos.title': { es: 'Comercios', en: 'Shops' },
   'casos.cta': { es: 'Publicado con permiso', en: 'Published with permission' },
   'casos.empty': {
-    es: 'Pronto publicaremos los primeros casos con permiso de los clientes.',
-    en: 'We will publish the first cases once clients give permission.',
+    es: 'Pronto saldrán aquí comercios, con permiso de quien los lleva.',
+    en: 'Shops will show up here once their owners give permission.',
   },
-  'casos.all': { es: 'Ver todos los casos', en: 'View all work' },
+  'casos.all': { es: 'Ver todos los comercios', en: 'View all shops' },
 
   'servicios.title': { es: 'Tipo de trabajo', en: 'Kind of work' },
   'proceso.title': { es: 'Cómo está contado', en: 'How the work is told' },
-  'proyectos.title': { es: 'Lo que construimos por nuestra cuenta', en: 'What we build on our own' },
+  'proyectos.title': { es: 'Apps', en: 'Apps' },
   'faq.title': { es: 'Preguntas frecuentes', en: 'FAQ' },
   'cta.title': { es: 'Escribir a Gubia Digital', en: 'Write to Gubia Digital' },
   'cta.sub': {
@@ -168,16 +168,26 @@ const uiBase: Dict = {
 };
 
 const empresaUi: Dict = {
+  'nav.casos': { es: 'Casos', en: 'Work' },
+  'nav.proyectos': { es: 'Proyectos', en: 'Projects' },
   'nav.cta': { es: 'Pide presupuesto', en: 'Get a quote' },
   'hero.sub': {
     es: 'Webs a medida para pymes locales. Precio cerrado, sin sorpresas.',
     en: 'Custom sites for local businesses. Fixed price, no surprises.',
   },
+  'hero.cta.secondary': { es: 'Ver casos', en: 'See work' },
   'hero.cta.primary': { es: 'Pide presupuesto', en: 'Get a quote' },
   'garantias.precio': { es: 'Precio cerrado', en: 'Fixed price' },
   'garantias.tuya': { es: 'Web tuya (código y dominio a tu nombre)', en: 'Your site (code and domain in your name)' },
   'garantias.permanencia': { es: 'Sin permanencia', en: 'No lock-in' },
+  'casos.title': { es: 'Casos', en: 'Selected work' },
   'casos.cta': { es: '¿Tu negocio es el siguiente?', en: 'Is your business next?' },
+  'casos.empty': {
+    es: 'Pronto publicaremos los primeros casos con permiso de los clientes.',
+    en: 'We will publish the first cases once clients give permission.',
+  },
+  'casos.all': { es: 'Ver todos los casos', en: 'View all work' },
+  'proyectos.title': { es: 'Lo que construimos por nuestra cuenta', en: 'What we build on our own' },
   'servicios.title': { es: 'Qué hacemos', en: 'What we do' },
   'proceso.title': { es: 'Cómo trabajamos', en: 'How we work' },
   'cta.title': { es: 'Cuéntanos tu negocio', en: 'Tell us about your business' },

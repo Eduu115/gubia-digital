@@ -3,6 +3,7 @@ import type { Lang, RouteKey } from '../../i18n/routes';
 import { localizedPath } from '../../i18n/utils';
 import { uiT } from '../../i18n/ui';
 import LangSwitch from './LangSwitch.astro';
+import { siteMode } from '../../data/site';
 
 interface Props {
   lang: Lang;
@@ -14,8 +15,15 @@ interface Props {
 const { lang, routeKey, slug, alternateHref } = Astro.props;
 
 const links = [
-  { key: 'casos' as const, label: uiT('nav.casos', lang) },
-  { key: 'proyectos' as const, label: uiT('nav.proyectos', lang) },
+  ...(siteMode === 'portfolio'
+    ? [
+        { key: 'proyectos' as const, label: uiT('nav.proyectos', lang) },
+        { key: 'casos' as const, label: uiT('nav.casos', lang) },
+      ]
+    : [
+        { key: 'casos' as const, label: uiT('nav.casos', lang) },
+        { key: 'proyectos' as const, label: uiT('nav.proyectos', lang) },
+      ]),
   { key: 'nosotros' as const, label: uiT('nav.nosotros', lang) },
   { key: 'contacto' as const, label: uiT('nav.contacto', lang) },
 ];
