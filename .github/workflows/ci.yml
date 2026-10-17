@@ -3,7 +3,7 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, feat/proyectos-propios]
 
 jobs:
   check:
@@ -24,3 +24,22 @@ jobs:
       - run: pnpm --filter web links
       - run: pnpm --filter web exec playwright install --with-deps chromium
       - run: pnpm --filter web e2e
+
+  deploy:
+    needs: check
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feat/proyectos-propios')
+    runs-on: ubuntu-latest
+    concurrency:
+      group: gubia-homelab
+      cancel-in-progress: false
+    steps:
+      - name: Desplegar en el homelab
+        env:
+          SSH_KEY: ${{ secrets.GUBIA_SSH_KEY }}
+          SSH_HOST: ${{ secrets.GUBIA_SSH_HOST }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/gubia
+          chmod 600 ~/.ssh/gubia
+          ssh -i ~/.ssh/gubia -o StrictHostKeyChecking=accept-new "dudu@${SSH_HOST}" \
+            "cd ~/apps/gubia-digital && GUBIA_DEPLOY_OK=1 GUBIA_BRANCH=${{ github.ref_name }} infra/deploy.sh"
