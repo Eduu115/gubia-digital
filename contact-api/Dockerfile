@@ -6,10 +6,10 @@ RUN apt-get update \
 COPY package.json ./
 RUN corepack enable \
   && printf '%s\n' 'allowBuilds:' '  better-sqlite3: true' > pnpm-workspace.yaml \
-  && pnpm install --prod
+  && pnpm install
 COPY src ./src
 ENV PORT=8787
 ENV DB_PATH=/data/leads.sqlite
 EXPOSE 8787
-CMD ["node", "--experimental-strip-types", "src/index.ts"]
+CMD ["pnpm", "exec", "tsx", "src/index.ts"]
 HEALTHCHECK --interval=30s --timeout=3s --retries=3 CMD node -e "fetch('http://127.0.0.1:8787/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
