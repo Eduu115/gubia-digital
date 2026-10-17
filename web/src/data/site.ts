@@ -15,6 +15,6 @@ export const site = {
 };
 
 /** portfolio: Gubia Digital como nombre, sin vender. empresa: presupuestos y servicios. */
-export const siteMode = 'portfolio' as 'portfolio' | 'empresa';
+export const siteMode = 'empresa' as 'portfolio' | 'empresa';
 
 export type Bilingual = { es: string; en: string };
