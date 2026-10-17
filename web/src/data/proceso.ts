@@ -11,8 +11,8 @@ export const proceso: { titulo: Bilingual; texto: Bilingual }[] = [
   {
     titulo: { es: 'Propuesta', en: 'Proposal' },
     texto: {
-      es: 'Alcance claro y precio cerrado. Sin sorpresas a mitad de camino.',
-      en: 'Clear scope and a fixed price. No surprises halfway through.',
+      es: 'Definimos qué hay que construir y cómo se va a usar.',
+      en: 'We define what has to be built and how it will be used.',
     },
   },
   {

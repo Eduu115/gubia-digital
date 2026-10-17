@@ -20,7 +20,7 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'A qué se dedica',
           body: [
-            'Gubia Digital diseña y desarrolla webs para negocios locales: una web nueva, un rediseño o presencia en buscadores. El precio y el plazo se cierran en cada propuesta.',
+            'Gubia Digital es una empresa tecnológica. Desarrolla aplicaciones web. Esta página muestra el trabajo y los proyectos propios. No publica precios ni pide presupuesto.',
           ],
         },
         {
@@ -54,7 +54,7 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'What the business does',
           body: [
-            'Gubia Digital designs and builds websites for local businesses: a new site, a redesign, or search presence. Price and schedule are fixed in each proposal.',
+            'Gubia Digital is a technology company. It builds web applications. This site shows the work and the in-house projects. It does not publish prices or ask for a quote.',
           ],
         },
         {
@@ -88,7 +88,7 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'Qué datos',
           body: [
-            'Si envías el formulario: nombre, email, teléfono si lo das, negocio, tipo de negocio, qué necesitas, web actual si la das, presupuesto orientativo, plazo, mensaje, idioma y la página desde la que llegaste.',
+            'Si envías el formulario: nombre, email, teléfono si lo das, negocio, tipo de negocio, qué necesitas, web actual si la das, plazo, mensaje, idioma y la página desde la que llegaste.',
             'Guardamos un hash de la dirección IP, no la IP en claro, para limitar envíos repetidos. No armamos un perfil comercial con eso.',
           ],
         },
@@ -139,7 +139,7 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'What we collect',
           body: [
-            'If you send the form: name, email, phone if you give it, business, business type, what you need, current website if you give it, a rough budget, timeline, message, language, and the page you came from.',
+            'If you send the form: name, email, phone if you give it, business, business type, what you need, current website if you give it, timeline, message, language, and the page you came from.',
             'We store a hash of the IP address, not the raw IP, to limit repeated submissions. We do not build a marketing profile from it.',
           ],
         },

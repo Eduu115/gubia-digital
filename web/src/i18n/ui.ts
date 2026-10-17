@@ -7,7 +7,7 @@ export const ui: Dict = {
   'nav.proyectos': { es: 'Proyectos', en: 'Projects' },
   'nav.nosotros': { es: 'Nosotros', en: 'About' },
   'nav.contacto': { es: 'Contacto', en: 'Contact' },
-  'nav.cta': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'nav.cta': { es: 'Escríbenos', en: 'Write to us' },
   'nav.menu': { es: 'Menú', en: 'Menu' },
   'nav.close': { es: 'Cerrar', en: 'Close' },
   'skip': { es: 'Saltar al contenido', en: 'Skip to content' },
@@ -20,20 +20,20 @@ export const ui: Dict = {
     en: 'Your business, crafted for the web',
   },
   'hero.sub': {
-    es: 'Webs a medida para pymes locales. Precio cerrado, sin sorpresas.',
-    en: 'Custom sites for local businesses. Fixed price, no surprises.',
+    es: 'Empresa tecnológica. Desarrollamos aplicaciones web.',
+    en: 'A technology company. We build web applications.',
   },
-  'hero.cta.primary': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'hero.cta.primary': { es: 'Escríbenos', en: 'Write to us' },
   'hero.cta.secondary': { es: 'Ver casos', en: 'See work' },
   'hero.fallback': {
     es: 'Oficio digital para negocios de barrio',
     en: 'Digital craft for neighborhood businesses',
   },
 
-  'garantias.precio': { es: 'Precio cerrado', en: 'Fixed price' },
+  'garantias.precio': { es: 'Aplicaciones web a medida', en: 'Custom web applications' },
   'garantias.tuya': { es: 'Web tuya (código y dominio a tu nombre)', en: 'Your site (code and domain in your name)' },
   'garantias.carga': { es: 'Pensada para cargar rápido', en: 'Built to load fast' },
-  'garantias.permanencia': { es: 'Sin permanencia', en: 'No lock-in' },
+  'garantias.permanencia': { es: 'Código que se puede mantener', en: 'Code you can keep maintaining' },
 
   'casos.title': { es: 'Casos', en: 'Selected work' },
   'casos.cta': { es: '¿Tu negocio es el siguiente?', en: 'Is your business next?' },
@@ -47,7 +47,7 @@ export const ui: Dict = {
   'proceso.title': { es: 'Cómo trabajamos', en: 'How we work' },
   'proyectos.title': { es: 'Lo que construimos por nuestra cuenta', en: 'What we build on our own' },
   'faq.title': { es: 'Preguntas frecuentes', en: 'FAQ' },
-  'cta.title': { es: 'Cuéntanos tu negocio', en: 'Tell us about your business' },
+  'cta.title': { es: 'Cuéntanos qué quieres construir', en: 'Tell us what you want to build' },
   'cta.sub': {
     es: 'Cuéntanos el negocio y te respondemos por email o WhatsApp.',
     en: 'Tell us about the business and we reply by email or WhatsApp.',
@@ -115,7 +115,7 @@ export const ui: Dict = {
     es: 'Vienes de la web de {cliente}. Así es como la hicimos.',
     en: 'You came from {cliente}\'s website. This is how we built it.',
   },
-  'ref.cta': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'ref.cta': { es: 'Escríbenos', en: 'Write to us' },
   'ref.close': { es: 'Cerrar', en: 'Close' },
 
   'metric.before': { es: 'Antes', en: 'Before' },
