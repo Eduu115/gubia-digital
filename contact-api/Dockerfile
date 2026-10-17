@@ -5,7 +5,7 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 COPY package.json ./
 RUN corepack enable \
-  && printf '%s\n' 'onlyBuiltDependencies:' '  - better-sqlite3' > pnpm-workspace.yaml \
+  && printf '%s\n' 'allowBuilds:' '  better-sqlite3: true' > pnpm-workspace.yaml \
   && pnpm install --prod
 COPY src ./src
 ENV PORT=8787
