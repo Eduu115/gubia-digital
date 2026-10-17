@@ -102,14 +102,14 @@ for (const c of allCasos.slice(0, 3)) {
 {/* Hero */}
 <section class="border-b border-linea bg-crema">
   <div
-    class="mx-auto grid min-h-[min(100dvh,52rem)] max-w-[var(--container-max)] items-center gap-10 px-4 pb-16 pt-10 md:grid-cols-2 md:px-6 md:pt-16"
+    class="mx-auto grid min-h-[min(100dvh,52rem)] max-w-[var(--container-max)] items-center gap-12 px-4 py-16 md:grid-cols-2 md:px-6"
   >
     <div>
-      <h1 class="font-display text-4xl font-bold tracking-tight text-tinta text-balance md:text-5xl lg:text-[3.25rem]">
+      <h1 class="font-display text-5xl font-bold leading-[1.02] tracking-tight text-tinta text-balance md:text-6xl lg:text-7xl">
         <span class="gubia-underline">{uiT('hero.title', lang)}</span>
       </h1>
-      <p class="mt-5 max-w-[36ch] text-lg text-tinta/80">{uiT('hero.sub', lang)}</p>
-      <div class="mt-8 flex flex-wrap gap-3">
+      <p class="mt-6 max-w-[28ch] text-xl text-tinta/80">{uiT('hero.sub', lang)}</p>
+      <div class="mt-10 flex flex-wrap gap-3">
         <Button href={localizedPath('contacto', lang)} variant="primary">
           {uiT('hero.cta.primary', lang)}
         </Button>

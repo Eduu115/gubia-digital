@@ -26,19 +26,19 @@ const here =
     href={lang === 'es' ? here : href}
     class:list={[
       'rounded px-1.5 py-0.5',
-      lang === 'es' ? 'bg-tinta text-crema' : 'text-gris hover:text-tinta',
+      lang === 'es' ? 'bg-naranja text-tinta' : 'text-crema/80 hover:text-blanco',
     ]}
     aria-current={lang === 'es' ? 'true' : undefined}
     hreflang="es"
   >
     {uiT('lang.es', lang)}
   </a>
-  <span class="text-linea" aria-hidden="true">/</span>
+  <span class="text-crema/40" aria-hidden="true">/</span>
   <a
     href={lang === 'en' ? here : href}
     class:list={[
       'rounded px-1.5 py-0.5',
-      lang === 'en' ? 'bg-tinta text-crema' : 'text-gris hover:text-tinta',
+      lang === 'en' ? 'bg-naranja text-tinta' : 'text-crema/80 hover:text-blanco',
     ]}
     aria-current={lang === 'en' ? 'true' : undefined}
     hreflang="en"
