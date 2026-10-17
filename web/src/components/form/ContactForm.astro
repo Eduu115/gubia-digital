@@ -3,7 +3,7 @@ import type { Lang } from '../../i18n/routes';
 import { uiT } from '../../i18n/ui';
 import { localizedPath } from '../../i18n/utils';
 import Button from '../ui/Button.astro';
-import { site } from '../../data/site';
+import { site, siteMode } from '../../data/site';
 
 interface Props {
   lang: Lang;
@@ -12,8 +12,8 @@ interface Props {
 const { lang } = Astro.props;
 const action = '/api/contact';
 const ts = Date.now().toString();
-
 const needs = ['nueva', 'rediseno', 'tienda', 'seo', 'mantenimiento', 'otra'] as const;
+const empresa = siteMode === 'empresa';
 ---
 
 <form
@@ -58,97 +58,67 @@ const needs = ['nueva', 'rediseno', 'tienda', 'seo', 'mantenimiento', 'otra'] as
     </div>
   </div>
 
-  <div class="grid gap-5 md:grid-cols-2">
-    <div class="flex flex-col gap-2">
-      <label for="telefono" class="text-sm font-semibold text-tinta">
-        {uiT('form.phone', lang)}
-        <span class="font-normal text-gris">({uiT('form.optional', lang)})</span>
-      </label>
-      <input
-        id="telefono"
-        name="telefono"
-        type="tel"
-        autocomplete="tel"
-        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
-      />
-    </div>
-    <div class="flex flex-col gap-2">
-      <label for="negocio" class="text-sm font-semibold text-tinta">{uiT('form.business', lang)} *</label>
-      <input
-        id="negocio"
-        name="negocio"
-        required
-        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
-      />
-    </div>
-  </div>
-
   <div class="flex flex-col gap-2">
-    <label for="tipo" class="text-sm font-semibold text-tinta">{uiT('form.businessType', lang)} *</label>
-    <input
-      id="tipo"
-      name="tipo"
-      required
-      class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
-    />
-  </div>
-
-  <fieldset class="flex flex-col gap-2">
-    <legend class="text-sm font-semibold text-tinta">{uiT('form.need', lang)} *</legend>
-    <div class="grid gap-2 sm:grid-cols-2">
-      {
-        needs.map((n) => (
-          <label class="flex items-center gap-2 text-sm text-tinta">
-            <input type="checkbox" name="necesitas" value={n} class="size-4 accent-verde" />
-            {uiT(`form.need.${n}`, lang)}
-          </label>
-        ))
-      }
-    </div>
-  </fieldset>
-
-  <div class="flex flex-col gap-2">
-    <label for="web" class="text-sm font-semibold text-tinta">
-      {uiT('form.web', lang)}
+    <label for="telefono" class="text-sm font-semibold text-tinta">
+      {uiT('form.phone', lang)}
       <span class="font-normal text-gris">({uiT('form.optional', lang)})</span>
     </label>
     <input
-      id="web"
-      name="web"
-      type="url"
-      placeholder="https://"
+      id="telefono"
+      name="telefono"
+      type="tel"
+      autocomplete="tel"
       class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
     />
   </div>
 
-  <div class="grid gap-5 md:grid-cols-2">
-    <div class="flex flex-col gap-2">
-      <label for="presupuesto" class="text-sm font-semibold text-tinta">{uiT('form.budget', lang)}</label>
-      <select
-        id="presupuesto"
-        name="presupuesto"
-        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
-      >
-        <option value="">{uiT('form.budget.unknown', lang)}</option>
-        <option value="lt-1k">&lt; 1.000 €</option>
-        <option value="1-3k">1.000-3.000 €</option>
-        <option value="3-6k">3.000-6.000 €</option>
-        <option value="gt-6k">&gt; 6.000 €</option>
-      </select>
-    </div>
-    <div class="flex flex-col gap-2">
-      <label for="plazo" class="text-sm font-semibold text-tinta">{uiT('form.timeline', lang)}</label>
-      <select
-        id="plazo"
-        name="plazo"
-        class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta"
-      >
-        <option value="relaxed">{uiT('form.timeline.relaxed', lang)}</option>
-        <option value="month">{uiT('form.timeline.month', lang)}</option>
-        <option value="urgent">{uiT('form.timeline.urgent', lang)}</option>
-      </select>
-    </div>
-  </div>
+  {
+    empresa && (
+      <>
+        <div class="grid gap-5 md:grid-cols-2">
+          <div class="flex flex-col gap-2">
+            <label for="negocio" class="text-sm font-semibold text-tinta">{uiT('form.business', lang)} *</label>
+            <input id="negocio" name="negocio" required class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="tipo" class="text-sm font-semibold text-tinta">{uiT('form.businessType', lang)} *</label>
+            <input id="tipo" name="tipo" required class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta" />
+          </div>
+        </div>
+        <fieldset class="flex flex-col gap-2">
+          <legend class="text-sm font-semibold text-tinta">{uiT('form.need', lang)} *</legend>
+          <div class="grid gap-2 sm:grid-cols-2">
+            {needs.map((n) => (
+              <label class="flex items-center gap-2 text-sm text-tinta">
+                <input type="checkbox" name="necesitas" value={n} class="size-4 accent-verde" />
+                {uiT(`form.need.${n}`, lang)}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <div class="grid gap-5 md:grid-cols-2">
+          <div class="flex flex-col gap-2">
+            <label for="presupuesto" class="text-sm font-semibold text-tinta">{uiT('form.budget', lang)}</label>
+            <select id="presupuesto" name="presupuesto" class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta">
+              <option value="">{uiT('form.budget.unknown', lang)}</option>
+              <option value="lt-1k">&lt; 1.000 €</option>
+              <option value="1-3k">1.000-3.000 €</option>
+              <option value="3-6k">3.000-6.000 €</option>
+              <option value="gt-6k">&gt; 6.000 €</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="plazo" class="text-sm font-semibold text-tinta">{uiT('form.timeline', lang)}</label>
+            <select id="plazo" name="plazo" class="rounded-[var(--radius-md)] border border-linea bg-blanco px-3 py-2.5 text-tinta">
+              <option value="relaxed">{uiT('form.timeline.relaxed', lang)}</option>
+              <option value="month">{uiT('form.timeline.month', lang)}</option>
+              <option value="urgent">{uiT('form.timeline.urgent', lang)}</option>
+            </select>
+          </div>
+        </div>
+      </>
+    )
+  }
 
   <div class="flex flex-col gap-2">
     <label for="mensaje" class="text-sm font-semibold text-tinta">{uiT('form.message', lang)}</label>

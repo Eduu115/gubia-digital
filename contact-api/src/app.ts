@@ -12,9 +12,9 @@ const leadSchema = z.object({
   nombre: z.string().trim().min(1).max(120),
   email: z.string().trim().email().max(200),
   telefono: z.string().trim().max(40).optional().default(''),
-  negocio: z.string().trim().min(1).max(160),
-  tipo: z.string().trim().min(1).max(80),
-  necesitas: z.array(z.string().trim().min(1).max(40)).min(1),
+  negocio: z.string().trim().max(160).optional().default(''),
+  tipo: z.string().trim().max(80).optional().default(''),
+  necesitas: z.array(z.string().trim().min(1).max(40)).optional().default([]),
   web: z
     .string()
     .trim()

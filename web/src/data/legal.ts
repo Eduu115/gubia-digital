@@ -1,5 +1,5 @@
 import type { Lang, RouteKey } from '../i18n/routes';
-import { site } from './site';
+import { site, siteMode } from './site';
 
 export type LegalBlock = { heading: string; body: string[] };
 
@@ -13,14 +13,14 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'Quién publica',
           body: [
-            `${site.person} publica este sitio bajo el nombre ${site.name}. El contacto es ${site.email} y el teléfono ${site.phoneDisplay}.`,
-            'El NIF y el domicilio fiscal se añadirán a esta página en cuanto consten en el alta censal.',
+            `${site.person} es el titular de este sitio y lo publica con el nombre ${site.name}. Ese nombre es su forma de firmar el trabajo; no es una marca registrada. El contacto es ${site.email} y el teléfono ${site.phoneDisplay}.`,
+            'Esta web es un portfolio: muestra trabajo ya hecho y proyectos propios. No ofrece servicios ni precios.',
           ],
         },
         {
           heading: 'A qué se dedica',
           body: [
-            'Gubia Digital diseña y desarrolla webs para negocios locales: una web nueva, un rediseño o presencia en buscadores. El precio y el plazo se cierran en cada propuesta.',
+            'Gubia Digital es ese nombre. El trabajo que se ve aquí ya está hecho. No hay catálogo de servicios ni precios.',
           ],
         },
         {
@@ -47,14 +47,14 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'Who publishes this site',
           body: [
-            `${site.person} publishes this site under the name ${site.name}. Contact: ${site.email} and ${site.phoneDisplay}.`,
-            'The tax ID and fiscal address will be added here once the tax registration is on file.',
+            `${site.person} owns this site and publishes it under the name ${site.name}. That name is how he signs the work; it is not a registered trademark. Contact: ${site.email} and ${site.phoneDisplay}.`,
+            'This website is a portfolio: it shows finished work and personal projects. It does not offer services or prices.',
           ],
         },
         {
           heading: 'What the business does',
           body: [
-            'Gubia Digital designs and builds websites for local businesses: a new site, a redesign, or search presence. Price and schedule are fixed in each proposal.',
+            'Gubia Digital is that name. The work shown here is already done. There is no service menu and no prices.',
           ],
         },
         {
@@ -82,13 +82,12 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
           heading: 'Responsable',
           body: [
             `${site.person}, bajo el nombre ${site.name}. Escribe a ${site.email} o llama al ${site.phoneDisplay}.`,
-            'El NIF y el domicilio fiscal se publicarán aquí cuando consten en el alta censal.',
           ],
         },
         {
           heading: 'Qué datos',
           body: [
-            'Si envías el formulario: nombre, email, teléfono si lo das, negocio, tipo de negocio, qué necesitas, web actual si la das, presupuesto orientativo, plazo, mensaje, idioma y la página desde la que llegaste.',
+            'Si envías el formulario: nombre, email, teléfono si lo das, mensaje, idioma y la página desde la que llegaste.',
             'Guardamos un hash de la dirección IP, no la IP en claro, para limitar envíos repetidos. No armamos un perfil comercial con eso.',
           ],
         },
@@ -101,7 +100,7 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'Por qué podemos',
           body: [
-            'Porque lo pides al marcar la casilla y enviar el formulario, para poder contestarte antes de un contrato.',
+            'Porque lo pides al marcar la casilla y enviar el mensaje.',
           ],
         },
         {
@@ -133,13 +132,12 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
           heading: 'Who is responsible',
           body: [
             `${site.person}, under the name ${site.name}. Email ${site.email} or call ${site.phoneDisplay}.`,
-            'The tax ID and fiscal address will be published here once the tax registration is on file.',
           ],
         },
         {
           heading: 'What we collect',
           body: [
-            'If you send the form: name, email, phone if you give it, business, business type, what you need, current website if you give it, a rough budget, timeline, message, language, and the page you came from.',
+            'If you send the form: name, email, phone if you give it, message, language, and the page you came from.',
             'We store a hash of the IP address, not the raw IP, to limit repeated submissions. We do not build a marketing profile from it.',
           ],
         },
@@ -150,7 +148,7 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
         {
           heading: 'Legal basis',
           body: [
-            'You ask us to, by ticking the box and sending the form, so we can reply before any contract.',
+            'You ask us to, by ticking the box and sending the message.',
           ],
         },
         {
@@ -219,5 +217,55 @@ const copy: Record<LegalKey, Record<Lang, { description: string; blocks: LegalBl
 };
 
 export function legalDocument(key: LegalKey, lang: Lang) {
-  return copy[key][lang];
+  const page = copy[key][lang];
+  if (siteMode !== 'empresa') return page;
+  if (key === 'avisoLegal' && lang === 'es') {
+    return {
+      ...page,
+      blocks: page.blocks.map((block) => {
+        if (block.heading === 'Quién publica') {
+          return {
+            ...block,
+            body: [
+              `${site.person} ofrece servicios bajo el nombre ${site.name}. El contacto es ${site.email} y el teléfono ${site.phoneDisplay}.`,
+              `NIF: ${site.nif || 'pendiente'}. Domicilio: ${site.domicilio || 'pendiente'}.`,
+            ],
+          };
+        }
+        if (block.heading === 'A qué se dedica') {
+          return {
+            ...block,
+            body: [
+              'Gubia Digital diseña y desarrolla aplicaciones web. El precio y el plazo se cierran en cada propuesta.',
+            ],
+          };
+        }
+        return block;
+      }),
+    };
+  }
+  if (key === 'avisoLegal' && lang === 'en') {
+    return {
+      ...page,
+      blocks: page.blocks.map((block) => {
+        if (block.heading === 'Who publishes this site') {
+          return {
+            ...block,
+            body: [
+              `${site.person} offers services under the name ${site.name}. Contact: ${site.email} and ${site.phoneDisplay}.`,
+              `Tax ID: ${site.nif || 'pending'}. Address: ${site.domicilio || 'pending'}.`,
+            ],
+          };
+        }
+        if (block.heading === 'What the business does') {
+          return {
+            ...block,
+            body: ['Gubia Digital designs and builds web applications. Price and schedule are fixed in each proposal.'],
+          };
+        }
+        return block;
+      }),
+    };
+  }
+  return page;
 }

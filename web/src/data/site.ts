@@ -9,6 +9,12 @@ export const site = {
   github: 'https://github.com/Eduu115',
   // TODO(edu): dominio canónico cuando gubiadigital.com resuelva
   domainPlaceholder: 'gubiadigital.example',
+  /** Rellena esto al pasar a modo empresa. */
+  nif: '',
+  domicilio: '',
 };
+
+/** portfolio: Gubia Digital como nombre, sin vender. empresa: presupuestos y servicios. */
+export const siteMode = 'portfolio' as 'portfolio' | 'empresa';
 
 export type Bilingual = { es: string; en: string };

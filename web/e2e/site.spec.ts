@@ -37,9 +37,12 @@ test('el formulario sin JS llega a gracias con la API simulada', async ({ browse
   await page.goto('/contacto/');
   await page.getByRole('textbox', { name: 'Nombre *' }).fill('Ana');
   await page.getByRole('textbox', { name: 'Email *' }).fill('ana@example.com');
-  await page.getByRole('textbox', { name: 'Nombre del negocio *' }).fill('Taller');
-  await page.getByRole('textbox', { name: 'Tipo de negocio *' }).fill('Mercería');
-  await page.getByRole('checkbox', { name: 'Rediseño' }).check();
+  const negocio = page.getByRole('textbox', { name: 'Nombre del negocio *' });
+  if (await negocio.count()) {
+    await negocio.fill('Taller');
+    await page.getByRole('textbox', { name: 'Tipo de negocio *' }).fill('Mercería');
+    await page.getByRole('checkbox', { name: 'Rediseño' }).check();
+  }
   await page.getByRole('checkbox', { name: /política de privacidad/ }).check();
   await page.getByRole('button', { name: 'Enviar' }).click();
   await expect(page).toHaveURL(/\/gracias\/?$/);

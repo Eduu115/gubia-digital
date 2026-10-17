@@ -1,13 +1,14 @@
 import type { Lang } from './routes';
+import { siteMode } from '../data/site';
 
 type Dict = Record<string, Record<Lang, string>>;
 
-export const ui: Dict = {
+const uiBase: Dict = {
   'nav.casos': { es: 'Casos', en: 'Work' },
   'nav.proyectos': { es: 'Proyectos', en: 'Projects' },
   'nav.nosotros': { es: 'Nosotros', en: 'About' },
   'nav.contacto': { es: 'Contacto', en: 'Contact' },
-  'nav.cta': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'nav.cta': { es: 'Escríbenos', en: 'Write to us' },
   'nav.menu': { es: 'Menú', en: 'Menu' },
   'nav.close': { es: 'Cerrar', en: 'Close' },
   'skip': { es: 'Saltar al contenido', en: 'Skip to content' },
@@ -20,37 +21,37 @@ export const ui: Dict = {
     en: 'Your business, crafted for the web',
   },
   'hero.sub': {
-    es: 'Webs a medida para pymes locales. Precio cerrado, sin sorpresas.',
-    en: 'Custom sites for local businesses. Fixed price, no surprises.',
+    es: 'Gubia Digital. Aplicaciones web y proyectos propios.',
+    en: 'Gubia Digital. Web applications and personal projects.',
   },
-  'hero.cta.primary': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'hero.cta.primary': { es: 'Escríbenos', en: 'Write to us' },
   'hero.cta.secondary': { es: 'Ver casos', en: 'See work' },
   'hero.fallback': {
     es: 'Oficio digital para negocios de barrio',
     en: 'Digital craft for neighborhood businesses',
   },
 
-  'garantias.precio': { es: 'Precio cerrado', en: 'Fixed price' },
-  'garantias.tuya': { es: 'Web tuya (código y dominio a tu nombre)', en: 'Your site (code and domain in your name)' },
+  'garantias.precio': { es: 'Aplicaciones web', en: 'Web applications' },
+  'garantias.tuya': { es: 'Trabajo documentado', en: 'Documented work' },
   'garantias.carga': { es: 'Pensada para cargar rápido', en: 'Built to load fast' },
-  'garantias.permanencia': { es: 'Sin permanencia', en: 'No lock-in' },
+  'garantias.permanencia': { es: 'Proyectos propios en marcha', en: 'Personal projects in progress' },
 
   'casos.title': { es: 'Casos', en: 'Selected work' },
-  'casos.cta': { es: '¿Tu negocio es el siguiente?', en: 'Is your business next?' },
+  'casos.cta': { es: 'Publicado con permiso', en: 'Published with permission' },
   'casos.empty': {
     es: 'Pronto publicaremos los primeros casos con permiso de los clientes.',
     en: 'We will publish the first cases once clients give permission.',
   },
   'casos.all': { es: 'Ver todos los casos', en: 'View all work' },
 
-  'servicios.title': { es: 'Qué hacemos', en: 'What we do' },
-  'proceso.title': { es: 'Cómo trabajamos', en: 'How we work' },
+  'servicios.title': { es: 'Tipo de trabajo', en: 'Kind of work' },
+  'proceso.title': { es: 'Cómo está contado', en: 'How the work is told' },
   'proyectos.title': { es: 'Lo que construimos por nuestra cuenta', en: 'What we build on our own' },
   'faq.title': { es: 'Preguntas frecuentes', en: 'FAQ' },
-  'cta.title': { es: 'Cuéntanos tu negocio', en: 'Tell us about your business' },
+  'cta.title': { es: 'Escribir a Gubia Digital', en: 'Write to Gubia Digital' },
   'cta.sub': {
-    es: 'Cuéntanos el negocio y te respondemos por email o WhatsApp.',
-    en: 'Tell us about the business and we reply by email or WhatsApp.',
+    es: 'Gubia Digital es el nombre de este sitio. No ofrece servicios ni precios.',
+    en: 'Gubia Digital is the name of this site. It does not offer services or prices.',
   },
 
   'compare.before': { es: 'Antes', en: 'Before' },
@@ -115,7 +116,7 @@ export const ui: Dict = {
     es: 'Vienes de la web de {cliente}. Así es como la hicimos.',
     en: 'You came from {cliente}\'s website. This is how we built it.',
   },
-  'ref.cta': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'ref.cta': { es: 'Ver el trabajo', en: 'See the work' },
   'ref.close': { es: 'Cerrar', en: 'Close' },
 
   'metric.before': { es: 'Antes', en: 'Before' },
@@ -123,8 +124,8 @@ export const ui: Dict = {
   'starting.title': { es: 'Punto de partida', en: 'Starting point' },
   'case.next': { es: 'Siguiente caso', en: 'Next case' },
   'case.cta': {
-    es: '¿Quieres un antes/después así para tu negocio?',
-    en: 'Want a before/after like this for your business?',
+    es: 'Así quedó el trabajo.',
+    en: 'This is how the work turned out.',
   },
   'case.report': { es: 'Informe completo (PDF)', en: 'Full report (PDF)' },
   'case.live': { es: 'Ver web en vivo', en: 'View live site' },
@@ -165,6 +166,33 @@ export const ui: Dict = {
     en: 'Development only. Not published.',
   },
 };
+
+const empresaUi: Dict = {
+  'nav.cta': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'hero.sub': {
+    es: 'Webs a medida para pymes locales. Precio cerrado, sin sorpresas.',
+    en: 'Custom sites for local businesses. Fixed price, no surprises.',
+  },
+  'hero.cta.primary': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'garantias.precio': { es: 'Precio cerrado', en: 'Fixed price' },
+  'garantias.tuya': { es: 'Web tuya (código y dominio a tu nombre)', en: 'Your site (code and domain in your name)' },
+  'garantias.permanencia': { es: 'Sin permanencia', en: 'No lock-in' },
+  'casos.cta': { es: '¿Tu negocio es el siguiente?', en: 'Is your business next?' },
+  'servicios.title': { es: 'Qué hacemos', en: 'What we do' },
+  'proceso.title': { es: 'Cómo trabajamos', en: 'How we work' },
+  'cta.title': { es: 'Cuéntanos tu negocio', en: 'Tell us about your business' },
+  'cta.sub': {
+    es: 'Cuéntanos el negocio y te respondemos por email o WhatsApp.',
+    en: 'Tell us about the business and we reply by email or WhatsApp.',
+  },
+  'ref.cta': { es: 'Pide presupuesto', en: 'Get a quote' },
+  'case.cta': {
+    es: '¿Quieres un antes/después así para tu negocio?',
+    en: 'Want a before/after like this for your business?',
+  },
+};
+
+export const ui: Dict = siteMode === 'empresa' ? { ...uiBase, ...empresaUi } : uiBase;
 
 export function uiT(key: keyof typeof ui | string, lang: Lang): string {
   const entry = ui[key];
