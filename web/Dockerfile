@@ -2,7 +2,8 @@ FROM node:22-alpine AS build
 WORKDIR /app
 RUN corepack enable
 COPY package.json ./
-RUN pnpm install
+RUN printf '%s\n' 'onlyBuiltDependencies:' '  - esbuild' '  - sharp' > pnpm-workspace.yaml \
+  && pnpm install
 COPY . .
 RUN pnpm build
 
