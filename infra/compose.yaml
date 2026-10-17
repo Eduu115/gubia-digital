@@ -4,7 +4,10 @@ services:
     build:
       context: ../web
     ports:
-      - "8080:80"
+      # 8080 del host ya lo usa otro contenedor. Solo localhost: el público entra por el túnel.
+      - "127.0.0.1:8092:80"
+    depends_on:
+      - gubia-contact
     mem_limit: 64m
     read_only: true
     tmpfs:
@@ -23,6 +26,8 @@ services:
     environment:
       PORT: "8787"
       DB_PATH: /data/leads.sqlite
+    env_file:
+      - ../contact-api/.env
     volumes:
       - gubia-leads:/data
     restart: unless-stopped

@@ -11,7 +11,13 @@ if [ "${GUBIA_DEPLOY_OK:-}" != "1" ]; then
   exit 1
 fi
 
-git pull --ff-only
+git fetch origin
+if [ -n "${GUBIA_BRANCH:-}" ]; then
+  git checkout "$GUBIA_BRANCH"
+  git pull --ff-only origin "$GUBIA_BRANCH"
+else
+  git pull --ff-only
+fi
 docker compose -f infra/compose.yaml -p gubia build
 docker compose -f infra/compose.yaml -p gubia up -d --remove-orphans
 docker compose -f infra/compose.yaml -p gubia ps
